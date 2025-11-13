@@ -1,0 +1,4 @@
+name: PVPBox
+version: '${project.version}'
+main: fr.octopk.pvpbox.PVPBox
+author: OctoPK
