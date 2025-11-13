@@ -1,0 +1,8 @@
+location:
+  spawn:
+    - 82.5
+    - 97
+    - -1928.5
+messages:
+  join: "§a[PVPBox] §2%player% §ajoin the game ! [%connected%/%maxslot%]"
+  quit: "§a[PVPBox] §2%player% §aleft the game ! [%connected%/%maxslot%]"

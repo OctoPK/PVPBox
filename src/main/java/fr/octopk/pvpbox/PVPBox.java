@@ -6,7 +6,7 @@ public final class PVPBox extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
+        getServer().getPluginManager().registerEvents(new PVPBoxListener(this), this);
     }
 
     @Override
