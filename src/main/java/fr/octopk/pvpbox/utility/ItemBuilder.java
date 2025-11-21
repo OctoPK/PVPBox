@@ -24,8 +24,9 @@ public class ItemBuilder {
         this.item = item;
     }
 
-    public void setQuantity(int amount) {
+    public ItemBuilder setQuantity(int amount) {
         item.setAmount(amount);
+        return this;
     }
 
     public ItemBuilder setName(String name) {

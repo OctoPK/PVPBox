@@ -1,6 +1,7 @@
 package fr.octopk.pvpbox.utility.GUI;
 
 import fr.octopk.pvpbox.PVPBox;
+import fr.octopk.pvpbox.menu.MenuKit;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -14,6 +15,7 @@ public class GUIManager {
     public GUIManager() {
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new GUIClickEvent(), PVPBox.getInstance());
+        registerMenu(MenuKit.getInstance());
     }
 
     public static void registerMenu(GUI gui) {
