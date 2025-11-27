@@ -6,3 +6,4 @@ location:
 messages:
   join: "§a[PVPBox] §2%player% §ajoin the game §2[%connected%/%maxslot%]"
   quit: "§a[PVPBox] §2%player% §aleft the game §2[%connected%/%maxslot%]"
+  kill: "§a[PVPBox] §2%killer% §akill §2%dead% §a!"

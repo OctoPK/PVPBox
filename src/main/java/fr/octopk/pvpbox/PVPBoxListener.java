@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -23,9 +25,12 @@ import java.util.Arrays;
 public class PVPBoxListener implements Listener {
 
     private final PVPBox pvpBox;
+    private final Double[] spawn;
+
 
     public PVPBoxListener(PVPBox pvpBox) {
         this.pvpBox = pvpBox;
+        this.spawn = this.pvpBox.getConfig().getDoubleList("location.spawn").toArray(new Double[0]);
     }
 
     @EventHandler
@@ -35,7 +40,6 @@ public class PVPBoxListener implements Listener {
         p.getInventory().setHeldItemSlot(4);
         p.setHealth(20);
         p.setFoodLevel(20);
-        Double[] spawn = pvpBox.getConfig().getDoubleList("location.spawn").toArray(new Double[0]);
         p.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
         e.setJoinMessage(pvpBox.getConfig().getString("messages.join").replace("%player%", p.getName()).replace("%connected%", Integer.toString(Bukkit.getOnlinePlayers().size())).replace("%maxslot%", Integer.toString(Bukkit.getMaxPlayers())));
 
@@ -50,6 +54,20 @@ public class PVPBoxListener implements Listener {
         check if player is in fight
          */
         e.setQuitMessage(pvpBox.getConfig().getString("messages.quit").replace("%player%", e.getPlayer().getName()).replace("%connected%", Integer.toString(Bukkit.getOnlinePlayers().size()-1)).replace("%maxslot%", Integer.toString(Bukkit.getMaxPlayers())));
+    }
+
+    @EventHandler
+    public void onKill(EntityDamageByEntityEvent e) {
+        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
+            Player damager = (Player) e.getDamager();
+            Player entity = (Player) e.getEntity();
+            if (entity.getHealth() - e.getDamage() <= 0) {
+                entity.setHealth(20);
+                entity.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
+                Bukkit.broadcastMessage(pvpBox.getConfig().getString("messages.killed").replace("%killer", damager.getName()).replace("%dead%", entity.getName()));
+                e.setCancelled(true);
+            }
+        }
     }
 
     @EventHandler
