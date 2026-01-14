@@ -1,26 +1,20 @@
-package fr.octopk.pvpbox;
+package fr.octopk.pvpbox.listener;
 
+import fr.octopk.pvpbox.PVPBox;
 import fr.octopk.pvpbox.utility.GUI.GUIManager;
 import fr.octopk.pvpbox.utility.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
 
 public class PVPBoxListener implements Listener {
 
@@ -30,13 +24,14 @@ public class PVPBoxListener implements Listener {
 
     public PVPBoxListener(PVPBox pvpBox) {
         this.pvpBox = pvpBox;
-        this.spawn = this.pvpBox.getConfig().getDoubleList("location.spawn").toArray(new Double[0]);
+        this.spawn = this.pvpBox.getConfig().getDoubleList("location.lobby-spawn").toArray(new Double[0]);
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         p.getInventory().clear();
+        p.getInventory().setArmorContents(null);
         p.getInventory().setHeldItemSlot(4);
         p.setHealth(20);
         p.setFoodLevel(20);

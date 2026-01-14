@@ -1,5 +1,7 @@
 package fr.octopk.pvpbox.menu;
 
+import fr.octopk.pvpbox.kit.Kit;
+import fr.octopk.pvpbox.kit.KitManager;
 import fr.octopk.pvpbox.utility.GUI.GUI;
 import fr.octopk.pvpbox.utility.GUI.GUIClick;
 import fr.octopk.pvpbox.utility.ItemBuilder;
@@ -9,7 +11,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 public class MenuKit extends GUI {
+
+    private final Map<Integer, Kit> slotKits = new HashMap<>();
+
     private MenuKit() {
         super("§8Kit Selector Menu");
     }
@@ -26,6 +35,7 @@ public class MenuKit extends GUI {
     @Override
     public void open(Player player) {
         inv = Bukkit.createInventory(null,9*6, "§8Kit Selector Menu");
+        Iterator<Kit> it = KitManager.kits.iterator();
 
         for(int i = 0; i < inv.getSize(); i++) {
             if(i ==  4) {
@@ -39,6 +49,13 @@ public class MenuKit extends GUI {
             }
             if(i == 50) {
                 inv.setItem(i, new ItemBuilder(Material.PAPER).setName("§7Page suivante").toItem());
+            }
+            if ((i != 27 && i != 26) && i > 9 && i < 44) {
+                if(it.hasNext()) {
+                    Kit kit = it.next();
+                    inv.setItem(i, kit.getIcon());
+                    slotKits.put(i, kit);
+                }
             }
         }
 
@@ -65,6 +82,11 @@ public class MenuKit extends GUI {
                 player.sendMessage("§0§k##§r§1Bravo vous avez trouvé un easter egg !§0§k##");
                 break;
             default:
+                if(slotKits.containsKey(rawSlot)) {
+                    Kit kit = slotKits.get(rawSlot);
+                    kit.giveKit(player);
+                    player.closeInventory();
+                }
                 break;
         }
     }

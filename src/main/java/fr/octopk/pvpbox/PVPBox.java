@@ -1,5 +1,7 @@
 package fr.octopk.pvpbox;
 
+import fr.octopk.pvpbox.kit.KitManager;
+import fr.octopk.pvpbox.listener.PVPBoxListener;
 import fr.octopk.pvpbox.utility.GUI.GUIManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -12,6 +14,7 @@ public final class PVPBox extends JavaPlugin {
         saveDefaultConfig();
         instance = this;
         new GUIManager();
+        new KitManager(instance);
         getServer().getPluginManager().registerEvents(new PVPBoxListener(this), this);
     }
 
