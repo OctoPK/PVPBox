@@ -2,3 +2,6 @@ name: PVPBox
 version: '${project.version}'
 main: fr.octopk.pvpbox.PVPBox
 author: OctoPK
+commands:
+  spawn:
+    description: commande pour retourné au spawn et qui clear l'inv

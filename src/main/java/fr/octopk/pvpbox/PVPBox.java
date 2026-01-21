@@ -1,5 +1,6 @@
 package fr.octopk.pvpbox;
 
+import fr.octopk.pvpbox.commands.CommandSpawn;
 import fr.octopk.pvpbox.kit.KitManager;
 import fr.octopk.pvpbox.listener.PVPBoxListener;
 import fr.octopk.pvpbox.utility.GUI.GUIManager;
@@ -15,6 +16,9 @@ public final class PVPBox extends JavaPlugin {
         instance = this;
         new GUIManager();
         new KitManager(instance);
+
+        getCommand("spawn").setExecutor(new CommandSpawn(this));
+
         getServer().getPluginManager().registerEvents(new PVPBoxListener(this), this);
     }
 
@@ -28,6 +32,6 @@ public final class PVPBox extends JavaPlugin {
     }
 
     public static String getPrefix() {
-        return "§a[PVPBox]§r";
+        return "§2[§aPVPBox§2]§r";
     }
 }

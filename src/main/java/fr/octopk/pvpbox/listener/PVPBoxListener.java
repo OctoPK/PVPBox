@@ -3,6 +3,7 @@ package fr.octopk.pvpbox.listener;
 import fr.octopk.pvpbox.PVPBox;
 import fr.octopk.pvpbox.utility.GUI.GUIManager;
 import fr.octopk.pvpbox.utility.ItemBuilder;
+import fr.octopk.pvpbox.utility.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,17 +31,11 @@ public class PVPBoxListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        p.getInventory().clear();
-        p.getInventory().setArmorContents(null);
-        p.getInventory().setHeldItemSlot(4);
-        p.setHealth(20);
-        p.setFoodLevel(20);
+
+        Util.clear(p);
+
         p.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
         e.setJoinMessage(pvpBox.getConfig().getString("messages.join").replace("%player%", p.getName()).replace("%connected%", Integer.toString(Bukkit.getOnlinePlayers().size())).replace("%maxslot%", Integer.toString(Bukkit.getMaxPlayers())));
-
-        ItemBuilder builder = new ItemBuilder(Material.COMPASS);
-        builder.setName("§6Kit Selector §7- Clic Droit");
-        p.getInventory().setItem(4, builder.toItem());
     }
 
     @EventHandler

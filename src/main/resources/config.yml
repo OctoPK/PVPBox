@@ -10,12 +10,12 @@ location:
     - [ 38.5, 9.0, -1980.5 ]
     - [ 25.5, 7.0, -1944.5 ]
     - [ 32.5, 8.0, -1888.5 ]
-    - [ 96.5, 8.0, -1863 ]
+    - [ 96.5, 8.0, -1863.5 ]
     - [ 139.5, 8.0, -1893.5 ]
     - [ 137.5, 8.0, -1941.5 ]
     - [ 82.5, 17.0, -1912.5 ]
     - [ 82.5, 14.0, -1941.5 ]
 messages:
-  join: "§a[PVPBox] §2%player% §ajoin the game §2[%connected%/%maxslot%]"
-  quit: "§a[PVPBox] §2%player% §aleft the game §2[%connected%/%maxslot%]"
-  kill: "§a[PVPBox] §2%killer% §akill §2%dead% §a!"
+  join: "§2[§aPVPBox§2]§a §2%player% §ajoin the game §2[%connected%/%maxslot%]"
+  quit: "§2[§aPVPBox§2]§a §2%player% §aleft the game §2[%connected%/%maxslot%]"
+  kill: "§2[§aPVPBox§2]§a §2%killer% §akill §2%dead% §a!"
