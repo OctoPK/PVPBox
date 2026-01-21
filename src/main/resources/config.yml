@@ -5,7 +5,7 @@ location:
     - -1928.5
 
   arena-spawns:
-    - [ 117.5, 8.0, -1986 ]
+    - [ 117.5, 8.0, -1986.5 ]
     - [ 81.5, 8.0, -1990.5 ]
     - [ 38.5, 9.0, -1980.5 ]
     - [ 25.5, 7.0, -1944.5 ]
@@ -19,3 +19,4 @@ messages:
   join: "§2[§aPVPBox§2]§a §2%player% §ajoin the game §2[%connected%/%maxslot%]"
   quit: "§2[§aPVPBox§2]§a §2%player% §aleft the game §2[%connected%/%maxslot%]"
   kill: "§2[§aPVPBox§2]§a §2%killer% §akill §2%dead% §a!"
+  death: "§2[§aPVPBox§2]§a §2%dead% §adied !"
