@@ -2,7 +2,6 @@ package fr.octopk.pvpbox.listener;
 
 import fr.octopk.pvpbox.PVPBox;
 import fr.octopk.pvpbox.utility.GUI.GUIManager;
-import fr.octopk.pvpbox.utility.ItemBuilder;
 import fr.octopk.pvpbox.utility.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

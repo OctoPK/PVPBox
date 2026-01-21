@@ -2,6 +2,7 @@ package fr.octopk.pvpbox.kit;
 
 import fr.octopk.pvpbox.PVPBox;
 import fr.octopk.pvpbox.kit.type.KitExemple;
+import fr.octopk.pvpbox.kit.type.KitTest;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
@@ -11,6 +12,7 @@ public class KitManager {
 
     public KitManager(PVPBox pvpBox) {
         registerKit(new KitExemple(pvpBox));
+        registerKit(new KitTest(pvpBox));
     }
 
     public static void registerKit(Kit kit) {

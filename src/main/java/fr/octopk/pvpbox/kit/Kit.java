@@ -43,5 +43,6 @@ public abstract class Kit {
         Location loc = new Location(Bukkit.getWorld("world"), x, y, z);
         player.teleport(loc);
         player.setGameMode(GameMode.SURVIVAL);
+        player.getInventory().clear();
     }
 }

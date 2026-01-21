@@ -16,7 +16,8 @@ public class KitExemple extends Kit {
 
     @Override
     public void giveKit(Player player) {
-        player.getInventory().clear();
+        super.giveKit(player);
+
         player.getInventory().addItem(
                 new ItemBuilder(Material.IRON_SWORD).toItem(),
                 new ItemBuilder(Material.COOKED_BEEF, 64).toItem(),
@@ -29,7 +30,6 @@ public class KitExemple extends Kit {
                 new ItemBuilder(Material.IRON_CHESTPLATE).toItem(),
                 new ItemBuilder(Material.CHAINMAIL_HELMET).toItem(),
         });
-        super.giveKit(player);
     }
 
 
