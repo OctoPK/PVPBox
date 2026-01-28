@@ -1,5 +1,7 @@
 package fr.octopk.pvpbox.utility;
 
+import fr.octopk.pvpbox.PVPBox;
+import fr.octopk.pvpbox.PlayerState;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,5 +19,7 @@ public class Util {
         ItemBuilder builder = new ItemBuilder(Material.COMPASS);
         builder.setName("§6Kit Selector §7- Clic Droit");
         p.getInventory().setItem(4, builder.toItem());
+
+        PVPBox.playerStates.put(p.getUniqueId(), PlayerState.LOBBY);
     }
 }

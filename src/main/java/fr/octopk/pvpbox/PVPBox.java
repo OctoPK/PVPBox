@@ -6,9 +6,14 @@ import fr.octopk.pvpbox.listener.PVPBoxListener;
 import fr.octopk.pvpbox.utility.GUI.GUIManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public final class PVPBox extends JavaPlugin {
 
     private static PVPBox instance;
+    public static Map<UUID, PlayerState> playerStates = new HashMap<>();
 
     @Override
     public void onEnable() {

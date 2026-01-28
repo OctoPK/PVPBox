@@ -1,5 +1,7 @@
 package fr.octopk.pvpbox.menu;
 
+import fr.octopk.pvpbox.PVPBox;
+import fr.octopk.pvpbox.PlayerState;
 import fr.octopk.pvpbox.kit.Kit;
 import fr.octopk.pvpbox.kit.KitManager;
 import fr.octopk.pvpbox.utility.GUI.GUI;
@@ -83,6 +85,7 @@ public class MenuKit extends GUI {
                 break;
             default:
                 if(slotKits.containsKey(rawSlot)) {
+                    PVPBox.playerStates.put(player.getUniqueId(), PlayerState.PLAYING);
                     Kit kit = slotKits.get(rawSlot);
                     kit.giveKit(player);
                     player.closeInventory();
