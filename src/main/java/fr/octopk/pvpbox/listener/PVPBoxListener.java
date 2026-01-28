@@ -7,10 +7,12 @@ import fr.octopk.pvpbox.utility.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
@@ -18,6 +20,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class PVPBoxListener implements Listener {
 
@@ -107,6 +110,23 @@ public class PVPBoxListener implements Listener {
             if(PVPBox.playerStates.get(p.getUniqueId()) == PlayerState.LOBBY) {
                 event.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent event) {
+        Player p = event.getPlayer();
+        Block block = event.getBlock();
+
+        if(PVPBox.playerStates.get(p.getUniqueId()) == PlayerState.PLAYING) {
+            Material type = block.getType();
+            Location loc = block.getLocation();
+
+            Bukkit.getScheduler().runTaskTimer(pvpBox, () -> {
+                if(loc.getBlock().getType() == type) {
+                    loc.getBlock().setType(Material.AIR);
+                }
+            }, 20*20L, 0);
         }
     }
 }
