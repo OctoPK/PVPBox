@@ -15,6 +15,7 @@ public class Util {
         p.setHealth(20);
         p.setFoodLevel(20);
         p.setGameMode(GameMode.ADVENTURE);
+        p.getActivePotionEffects().clear();
 
         ItemBuilder builder = new ItemBuilder(Material.COMPASS);
         builder.setName("§6Kit Selector §7- Clic Droit");

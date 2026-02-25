@@ -11,15 +11,17 @@ public class KitManager {
     public static ArrayList<Kit> kits = new ArrayList<>();
 
     public KitManager(PVPBox pvpBox) {
-        registerKit(new KitExemple(pvpBox));
-        registerKit(new KitTest(pvpBox));
+        registerKit(new KitExemple(pvpBox), pvpBox);
+        registerKit(new KitTest(pvpBox), pvpBox);
+
     }
 
-    public static void registerKit(Kit kit) {
+    public static void registerKit(Kit kit, PVPBox pvpBox) {
         if(kit == null)
             return;
         else if (kits.contains(kit)) return;
         kits.add(kit);
+        pvpBox.getServer().getPluginManager().registerEvents(kit, pvpBox);
     }
 
     public static Kit getKit(String name) {
