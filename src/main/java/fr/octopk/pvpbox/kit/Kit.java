@@ -13,11 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Classe abstraite pour les kit
+ */
 public abstract class Kit implements Listener {
+    //l'item a affiché dans notre menu de sélection de kit
     private ItemStack icon;
+    //le nom du kit
     private String name;
+    //référence à l'instance à la classe principal
     private PVPBox pvpBox;
+    //description à affiché dans le chat au moment de la sélection du kit
     private List<String> description;
+    //liste d'effet que contient le kit
     private List<PotionEffect> effects;
 
     public Kit(ItemStack icon, String name,  PVPBox pvpBox, List<String> description, List<PotionEffect> effects) {
@@ -44,6 +52,11 @@ public abstract class Kit implements Listener {
         return effects;
     }
 
+    /**
+     * Méthode qui donne le kit au joueur au moment de la sélectionn du kit.
+     * Elle téléporte le joueur aléatoire sur une liste de spawn différent
+     * @param player
+     */
     public void giveKit(Player player) {
         ArrayList<ArrayList<Double>> spawns = (ArrayList<ArrayList<Double>>) pvpBox.getConfig().getList("location.arena-spawns");
 
@@ -64,5 +77,8 @@ public abstract class Kit implements Listener {
         player.addPotionEffects(effects);
     }
 
+    /**
+     * Méthode abstraite pour réduire d'1seconde les cooldowns de tout les pouvoirs rattaché au kit
+     */
     public abstract void onTickAsync();
 }

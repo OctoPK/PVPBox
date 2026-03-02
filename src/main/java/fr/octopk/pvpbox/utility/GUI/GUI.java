@@ -3,6 +3,9 @@ package fr.octopk.pvpbox.utility.GUI;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * classe abstraite pour la gestion des menu
+ */
 public abstract class GUI {
     private String name;
 

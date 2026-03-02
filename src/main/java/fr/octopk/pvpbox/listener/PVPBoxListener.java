@@ -20,8 +20,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
+/**
+ * Listener principale du plugin
+ */
 public class PVPBoxListener implements Listener {
 
     private final PVPBox pvpBox;

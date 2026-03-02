@@ -9,6 +9,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * classe utilitaire pour la création d'un item custom
+ */
 public class ItemBuilder {
     private final ItemStack item;
 

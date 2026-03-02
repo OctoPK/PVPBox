@@ -8,6 +8,9 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * listener principale qui gère les interaction dans les inventaires
+ */
 public class GUIClickEvent implements Listener {
 
     @EventHandler

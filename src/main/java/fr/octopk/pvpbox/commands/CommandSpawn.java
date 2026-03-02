@@ -3,13 +3,15 @@ package fr.octopk.pvpbox.commands;
 import fr.octopk.pvpbox.PVPBox;
 import fr.octopk.pvpbox.utility.Util;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+/**
+ * Commande pour retourné au spawn
+ */
 public class CommandSpawn implements CommandExecutor {
 
     PVPBox instance;

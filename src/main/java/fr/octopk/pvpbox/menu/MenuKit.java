@@ -17,6 +17,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * Inventaire principale pour sélectionner un kit.
+ * C'est un singleton
+ */
 public class MenuKit extends GUI {
 
     private final Map<Integer, Kit> slotKits = new HashMap<>();
@@ -34,6 +38,10 @@ public class MenuKit extends GUI {
         return instance;
     }
 
+    /**
+     * ce que l'inventaire contient
+     * @param player le joueur où il faut ouvrir l'inventaire
+     */
     @Override
     public void open(Player player) {
         inv = Bukkit.createInventory(null,9*6, "§8Kit Selector Menu");
@@ -64,6 +72,13 @@ public class MenuKit extends GUI {
         player.openInventory(inv);
     }
 
+    /**
+     * La gestion du click dans l'inventaire
+     * @param player le joueur qui a fait l'interaction
+     * @param click le type du click
+     * @param item l'item interragit
+     * @param rawSlot l'emplacement du slot interragit
+     */
     @Override
     public void handleClick(Player player, GUIClick click, ItemStack item, int rawSlot) {
         if (item == null) return;

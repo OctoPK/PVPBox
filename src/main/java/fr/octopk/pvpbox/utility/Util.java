@@ -8,6 +8,10 @@ import org.bukkit.entity.Player;
 
 public class Util {
 
+    /**
+     * Méthode utilitaire pour réinitialisé le joueur à quand il spawn
+     * @param p le joueur à réinitialisé
+     */
     public static void clear(Player p) {
         p.getInventory().clear();
         p.getInventory().setArmorContents(null);
