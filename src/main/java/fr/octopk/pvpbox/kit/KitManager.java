@@ -2,6 +2,7 @@ package fr.octopk.pvpbox.kit;
 
 import fr.octopk.pvpbox.PVPBox;
 import fr.octopk.pvpbox.kit.type.KitExemple;
+import fr.octopk.pvpbox.kit.type.KitMagicalArcher;
 import fr.octopk.pvpbox.kit.type.KitTest;
 
 import java.util.ArrayList;
@@ -18,9 +19,8 @@ public class KitManager {
      * @param pvpBox
      */
     public KitManager(PVPBox pvpBox) {
-        registerKit(new KitExemple(pvpBox), pvpBox);
         registerKit(new KitTest(pvpBox), pvpBox);
-
+        registerKit(new KitMagicalArcher(pvpBox), pvpBox);
     }
 
     /**

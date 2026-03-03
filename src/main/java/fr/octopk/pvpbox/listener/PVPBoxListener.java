@@ -50,7 +50,11 @@ public class PVPBoxListener implements Listener {
         Player p = e.getPlayer();
         PVPBox.playerStates.remove(p.getUniqueId());
 
-        e.setQuitMessage(pvpBox.getConfig().getString("messages.quit").replace("%player%", e.getPlayer().getName()).replace("%connected%", Integer.toString(Bukkit.getOnlinePlayers().size()-1)).replace("%maxslot%", Integer.toString(Bukkit.getMaxPlayers())));
+        e.setQuitMessage(pvpBox.getConfig()
+                .getString("messages.quit")
+                .replace("%player%", e.getPlayer().getName())
+                .replace("%connected%", Integer.toString(Bukkit.getOnlinePlayers().size()-1))
+                .replace("%maxslot%", Integer.toString(Bukkit.getMaxPlayers())));
     }
 
     @EventHandler

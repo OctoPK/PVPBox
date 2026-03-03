@@ -16,7 +16,7 @@ public class CountDownAction {
     //le cooldown restant du pouvoir
     private int actualCooldown;
     //Le cooldown originel du pouvoir
-    private final int originalCooldown;
+    private int originalCooldown;
 
     public CountDownAction(String name, Consumer<Player> action, int cooldown) {
         this.actualCooldown = 0;
@@ -26,7 +26,7 @@ public class CountDownAction {
     }
 
     /**
-     * Méthode qui réduit d'1seconde le cooldown
+     * Méthode qui réduit de 1 tick le cooldown
      */
     public void tickSecond() {
         if (actualCooldown > 0) {
@@ -44,7 +44,15 @@ public class CountDownAction {
             action.accept(p);
             actualCooldown = originalCooldown;
         } else {
-            p.sendMessage(ChatColor.RED + "Votre pouvoir est en cooldown de "+ actualCooldown +"s restantes !");
+            p.sendMessage(ChatColor.RED + "Votre pouvoir est en cooldown de "+ actualCooldown/20 +"s restantes !");
         }
+    }
+
+    /**
+     * Pour changé de cooldown lorsque un pouvoir peu avoir des cooldown différent et qui change
+     * @param newCooldown
+     */
+    public void changeCooldown(int newCooldown) {
+        this.originalCooldown = newCooldown;
     }
 }

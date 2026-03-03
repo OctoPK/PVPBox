@@ -21,11 +21,11 @@ public class KitTest extends Kit {
                 "KitTest",
                 pvpBox,
                 Arrays.asList(
-                        "-".repeat(10),
+                        "----------------------------------------",
                         "§cTest",
                         "\n",
                         "Ceci est un kit test pour faire des test.",
-                        "-".repeat(10)
+                        "----------------------------------------"
                 ),
                 List.of());
     }
