@@ -15,6 +15,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -56,7 +57,7 @@ public class KitMagicalArcher extends Kit {
     }
 
 
-    private final CountDownAction shoot = new CountDownAction("shoot", this::shoot, 20);
+    private final CountDownAction shoot = new CountDownAction("shoot", this::shoot, 20, false);
     private HashMap<UUID, BowMode> bowMode = new HashMap<>();
 
     public KitMagicalArcher(PVPBox pvpBox) {
@@ -161,15 +162,37 @@ public class KitMagicalArcher extends Kit {
             case MITRAILLETTE:
                 Arrow mitrailletArrow = player.launchProjectile(Arrow.class);
                 mitrailletArrow.setVelocity(player.getLocation().getDirection().multiply(2));
-                mitrailletArrow.spigot().setDamage(3);
+                mitrailletArrow.spigot().setDamage(2);
                 break;
 
             case FUSIL_A_POMPE:
-                for (int i = 0; i < 5; i++) {
-                    Arrow arrow = player.launchProjectile(Arrow.class);
-                    arrow.setVelocity(player.getLocation().getDirection().multiply(2));
-                    arrow.spigot().setDamage(4);
-                }
+                Vector direction = player.getLocation().getDirection();
+
+                //centre
+                Arrow center = player.launchProjectile(Arrow.class);
+                center.setVelocity(direction.clone().multiply(2));
+                center.spigot().setDamage(3);
+
+                // haut
+                Arrow up = player.launchProjectile(Arrow.class);
+                up.setVelocity(direction.clone().add(new Vector(0, 0.15, 0)).multiply(2));
+                up.spigot().setDamage(2);
+
+                // bas
+                Arrow down = player.launchProjectile(Arrow.class);
+                down.setVelocity(direction.clone().add(new Vector(0, -0.15, 0)).multiply(2));
+                down.spigot().setDamage(2);
+
+                // gauche
+                Arrow left = player.launchProjectile(Arrow.class);
+                left.setVelocity(direction.clone().add(new Vector(-0.15, 0, 0)).multiply(2));
+                left.spigot().setDamage(2);
+
+                // droite
+                Arrow right = player.launchProjectile(Arrow.class);
+                right.setVelocity(direction.clone().add(new Vector(0.15, 0, 0)).multiply(2));
+                right.spigot().setDamage(2);
+
                 break;
         }
     }
