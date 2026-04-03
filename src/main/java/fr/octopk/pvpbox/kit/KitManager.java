@@ -21,6 +21,7 @@ public class KitManager {
     public KitManager(PVPBox pvpBox) {
         registerKit(new KitTest(pvpBox), pvpBox);
         registerKit(new KitMagicalArcher(pvpBox), pvpBox);
+        registerKit(new KitExemple(pvpBox), pvpBox);
     }
 
     /**
