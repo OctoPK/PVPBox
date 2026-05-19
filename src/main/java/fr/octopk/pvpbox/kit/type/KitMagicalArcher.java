@@ -57,8 +57,9 @@ public class KitMagicalArcher extends Kit {
     }
 
 
-    private final CountDownAction shoot = new CountDownAction("shoot", this::shoot, 20, false);
     private HashMap<UUID, BowMode> bowMode = new HashMap<>();
+
+    private static long LAST_SHOOT = 0;
 
     public KitMagicalArcher(PVPBox pvpBox) {
         super(
@@ -118,7 +119,6 @@ public class KitMagicalArcher extends Kit {
 
     @Override
     public void onTickAsync() {
-        shoot.tickSecond();
     }
 
     @EventHandler
@@ -142,10 +142,12 @@ public class KitMagicalArcher extends Kit {
             if (item.getType().equals(Material.BOW) && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equalsIgnoreCase("§6Magical Bow")) {
                 if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
                     bowMode.put(player.getUniqueId(), bowMode.get(player.getUniqueId()).next());
-                    shoot.changeCooldown(bowMode.get(player.getUniqueId()).getCooldown());
                 } else {
                     event.setCancelled(true);
-                    shoot.useAction(player);
+                    if (System.currentTimeMillis() - LAST_SHOOT >= bowMode.get(player.getUniqueId()).getCooldown() * 1000L/20) {
+                        shoot(player);
+                        LAST_SHOOT = System.currentTimeMillis();
+                    }
                 }
             }
         }

@@ -42,7 +42,11 @@ public class PVPBoxListener implements Listener {
         Util.clear(p);
 
         p.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
-        e.setJoinMessage(pvpBox.getConfig().getString("messages.join").replace("%player%", p.getName()).replace("%connected%", Integer.toString(Bukkit.getOnlinePlayers().size())).replace("%maxslot%", Integer.toString(Bukkit.getMaxPlayers())));
+        e.setJoinMessage(pvpBox.getConfig()
+                .getString("messages.join")
+                .replace("%player%", p.getName())
+                .replace("%connected%", Integer.toString(Bukkit.getOnlinePlayers().size()))
+                .replace("%maxslot%", Integer.toString(Bukkit.getMaxPlayers())));
     }
 
     @EventHandler

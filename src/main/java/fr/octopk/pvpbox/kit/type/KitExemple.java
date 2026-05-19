@@ -24,7 +24,7 @@ import java.util.UUID;
 public class KitExemple extends Kit {
 
     //Le pouvoir du kit avec le nom de l'action, la méthode à appelé lors de son activation et le cooldown du pouvoir (ici 60 seconde)
-    private final CountDownAction strenghtAction = new CountDownAction("Strenght", this::useTestStrenght, 60*20);
+    private final CountDownAction strenghtAction = new CountDownAction("Strenght", this::useTestStrenght, 60);
 
     private final Set<UUID> player = new HashSet<>();
 

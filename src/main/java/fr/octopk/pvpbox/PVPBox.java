@@ -43,7 +43,7 @@ public final class PVPBox extends JavaPlugin {
             public void run() {
                 KitManager.kits.forEach(Kit::onTickAsync);
             }
-        }, 1L, 1L);
+        }, 0L, 20L);
     }
 
     @Override
