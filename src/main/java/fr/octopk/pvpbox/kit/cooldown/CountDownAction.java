@@ -54,7 +54,7 @@ public class CountDownAction {
             action.accept(p);
             actualCooldown = originalCooldown;
         } else if (afficheCD){
-            p.sendMessage(ChatColor.RED + "Votre pouvoir est en cooldown de "+ actualCooldown/20 +"s restantes !");
+            p.sendMessage(ChatColor.RED + "Votre pouvoir est en cooldown de "+ actualCooldown +"s restantes !");
         }
     }
 

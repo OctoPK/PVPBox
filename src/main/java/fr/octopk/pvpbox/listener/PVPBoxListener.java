@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -61,27 +62,44 @@ public class PVPBoxListener implements Listener {
                 .replace("%maxslot%", Integer.toString(Bukkit.getMaxPlayers())));
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onKill(EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
-            Player damager = (Player) e.getDamager();
+        if (e.getEntity() instanceof Player) {
             Player entity = (Player) e.getEntity();
+            Player damager = null;
 
-            if(PVPBox.playerStates.get(entity.getUniqueId()) == PlayerState.LOBBY || PVPBox.playerStates.get(damager.getUniqueId()) == PlayerState.LOBBY) {
-                e.setCancelled(true);
-                return;
+            if (e.getDamager() instanceof Player) {
+                damager = (Player) e.getDamager();
+
+                System.out.println("Player health : " + entity.getHealth() + " | Damager damage : " + e.getFinalDamage() + " | ma condition : " + (entity.getHealth() - e.getFinalDamage()));
+
+                if (entity.getHealth() - e.getFinalDamage() <= 0) {
+                    Util.clear(entity);
+                    entity.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
+                    Bukkit.broadcastMessage(pvpBox.getConfig().getString("messages.kill").replace("%killer%", damager.getName()).replace("%dead%", entity.getName()));
+                    e.setCancelled(true);
+                }
+            } else if (e.getDamager() instanceof Projectile && ((Projectile) e.getDamager()).getShooter() instanceof Player) {
+                damager =  (Player) ((Projectile) e.getDamager()).getShooter();
+
+                System.out.println("Player health : " + entity.getHealth() + " | Damager damage : " + e.getFinalDamage() + " | ma condition : " + (entity.getHealth() - e.getFinalDamage()));
+
+                if (entity.getHealth() - e.getFinalDamage() <= 0) {
+                    Util.clear(entity);
+                    entity.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
+                    Bukkit.broadcastMessage(pvpBox.getConfig().getString("messages.shoot").replace("%killer%", damager.getName()).replace("%dead%", entity.getName()));
+                    e.setCancelled(true);
+                }
             }
 
-            if (entity.getHealth() - e.getDamage() <= 0) {
-                Util.clear(entity);
-                entity.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
-                Bukkit.broadcastMessage(pvpBox.getConfig().getString("messages.killed").replace("%killer", damager.getName()).replace("%dead%", entity.getName()));
+            if (PVPBox.playerStates.get(entity.getUniqueId()) == PlayerState.LOBBY || (damager != null && PVPBox.playerStates.get(damager.getUniqueId()) == PlayerState.LOBBY)) {
                 e.setCancelled(true);
+                return;
             }
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         Action action = e.getAction();
@@ -94,9 +112,9 @@ public class PVPBoxListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onDeath(EntityDamageEvent e) {
-        if(e.getEntity() instanceof Player) {
+        if(e.getEntity() instanceof Player && e.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK && e.getCause() != EntityDamageEvent.DamageCause.PROJECTILE) {
             Player p = (Player) e.getEntity();
 
             if(PVPBox.playerStates.get(p.getUniqueId()) == PlayerState.LOBBY) {
@@ -104,7 +122,9 @@ public class PVPBoxListener implements Listener {
                 return;
             }
 
-            if(p.getHealth() - e.getDamage() <= 0) {
+            System.out.println(e.toString());
+
+            if(p.getHealth() - e.getFinalDamage() <= 0) {
                 Util.clear(p);
                 p.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
                 Bukkit.broadcastMessage(pvpBox.getConfig().getString("messages.death").replace("%dead%", p.getName()));
@@ -113,7 +133,7 @@ public class PVPBoxListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onLoseFood(FoodLevelChangeEvent event) {
         if(event.getEntity() instanceof Player) {
             Player p = (Player) event.getEntity();
@@ -123,7 +143,7 @@ public class PVPBoxListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onBlockPlace(BlockPlaceEvent event) {
         Player p = event.getPlayer();
         Block block = event.getBlock();

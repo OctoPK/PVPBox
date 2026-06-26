@@ -19,4 +19,5 @@ messages:
   join: "§2[§aPVPBox§2]§a §2%player% §ajoin the game §2[%connected%/%maxslot%]"
   quit: "§2[§aPVPBox§2]§a §2%player% §aleft the game §2[%connected%/%maxslot%]"
   kill: "§2[§aPVPBox§2]§a §2%killer% §akill §2%dead% §a!"
+  shoot: "§2[§aPVPBox§2]§a §2%killer% §ashoot §2%dead% §a!"
   death: "§2[§aPVPBox§2]§a §2%dead% §adied !"

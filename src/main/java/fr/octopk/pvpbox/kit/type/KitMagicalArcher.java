@@ -9,6 +9,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -121,7 +122,7 @@ public class KitMagicalArcher extends Kit {
     public void onTickAsync() {
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onFallDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
@@ -139,7 +140,7 @@ public class KitMagicalArcher extends Kit {
         if(bowMode.containsKey(player.getUniqueId())) {
             ItemStack item = event.getItem();
             Action action = event.getAction();
-            if (item.getType().equals(Material.BOW) && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equalsIgnoreCase("§6Magical Bow")) {
+            if (item != null && item.getType().equals(Material.BOW) && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equalsIgnoreCase("§6Magical Bow")) {
                 if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
                     bowMode.put(player.getUniqueId(), bowMode.get(player.getUniqueId()).next());
                 } else {
