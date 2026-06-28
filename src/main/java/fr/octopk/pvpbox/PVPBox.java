@@ -4,6 +4,7 @@ import fr.octopk.pvpbox.commands.CommandSpawn;
 import fr.octopk.pvpbox.kit.Kit;
 import fr.octopk.pvpbox.kit.KitManager;
 import fr.octopk.pvpbox.listener.PVPBoxListener;
+import fr.octopk.pvpbox.utility.AutoBreakManager;
 import fr.octopk.pvpbox.utility.GUI.GUIManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -37,11 +38,12 @@ public final class PVPBox extends JavaPlugin {
         //j'enregistre un nouveau listener
         getServer().getPluginManager().registerEvents(new PVPBoxListener(this), this);
 
-        //boucle principale qui tourne en continue et qui gère les cooldowns des pouvoir
+        //boucle principale qui tourne en continue et qui gère les cooldowns des pouvoir et l'autobreak
         getServer().getScheduler().runTaskTimer(this, new BukkitRunnable() {
             @Override
             public void run() {
                 KitManager.kits.forEach(Kit::onTickAsync);
+                AutoBreakManager.onTyckAsync();
             }
         }, 0L, 20L);
     }

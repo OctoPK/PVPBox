@@ -124,4 +124,11 @@ public class KitExemple extends Kit {
         }
     }
 
+    public boolean containsPlayer(UUID uuid) {
+        return this.player.contains(uuid);
+    }
+
+    public void removePlayer(UUID uuid) {
+        this.player.remove(uuid);
+    }
 }

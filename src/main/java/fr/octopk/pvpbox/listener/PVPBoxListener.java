@@ -2,6 +2,7 @@ package fr.octopk.pvpbox.listener;
 
 import fr.octopk.pvpbox.PVPBox;
 import fr.octopk.pvpbox.PlayerState;
+import fr.octopk.pvpbox.utility.AutoBreakManager;
 import fr.octopk.pvpbox.utility.GUI.GUIManager;
 import fr.octopk.pvpbox.utility.Util;
 import org.bukkit.Bukkit;
@@ -99,7 +100,7 @@ public class PVPBoxListener implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         Action action = e.getAction();
@@ -143,20 +144,15 @@ public class PVPBoxListener implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         Player p = event.getPlayer();
         Block block = event.getBlock();
 
         if(PVPBox.playerStates.get(p.getUniqueId()) == PlayerState.PLAYING) {
-            Material type = block.getType();
             Location loc = block.getLocation();
 
-            Bukkit.getScheduler().runTaskTimer(pvpBox, () -> {
-                if(loc.getBlock().getType() == type) {
-                    loc.getBlock().setType(Material.AIR);
-                }
-            }, 20*20L, 0);
+            AutoBreakManager.addBlock(block, loc);
         }
     }
 }

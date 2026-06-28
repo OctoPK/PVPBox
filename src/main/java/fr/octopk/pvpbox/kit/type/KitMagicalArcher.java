@@ -134,7 +134,7 @@ public class KitMagicalArcher extends Kit {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onInteractWithBow(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if(bowMode.containsKey(player.getUniqueId())) {
@@ -185,5 +185,13 @@ public class KitMagicalArcher extends Kit {
         Arrow arrow = player.launchProjectile(Arrow.class);
         arrow.setVelocity(direction.clone().add(new Vector(x, y, z)).multiply(multiply));
         arrow.spigot().setDamage(damage);
+    }
+
+    public void removePlayer(UUID uuid) {
+        bowMode.remove(uuid);
+    }
+
+    public boolean containsPlayer(UUID uuid) {
+        return bowMode.containsKey(uuid);
     }
 }
