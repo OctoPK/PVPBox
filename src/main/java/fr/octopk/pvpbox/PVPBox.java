@@ -30,7 +30,7 @@ public final class PVPBox extends JavaPlugin {
 
         //j'initialise mes classe manager
         new GUIManager();
-        new KitManager(instance);
+        KitManager kitManager = KitManager.getInstance(instance);
 
         //j'enregistre une nouvelle commande
         getCommand("spawn").setExecutor(new CommandSpawn(this));
@@ -42,7 +42,11 @@ public final class PVPBox extends JavaPlugin {
         getServer().getScheduler().runTaskTimer(this, new BukkitRunnable() {
             @Override
             public void run() {
-                KitManager.kits.forEach(Kit::onTickAsync);
+                KitManager.getInstance(instance).getPlayerKits().forEach((uuid, kit) -> {
+                    if(kit != null) {
+                        kit.onTickAsync();
+                    }
+                });
                 AutoBreakManager.onTyckAsync();
             }
         }, 0L, 20L);

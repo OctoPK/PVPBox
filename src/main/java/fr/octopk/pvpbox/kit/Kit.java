@@ -5,7 +5,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
@@ -16,17 +15,17 @@ import java.util.Random;
 /**
  * Classe abstraite pour les kit
  */
-public abstract class Kit implements Listener {
+public abstract class Kit {
     //l'item a affiché dans notre menu de sélection de kit
-    private ItemStack icon;
+    protected ItemStack icon;
     //le nom du kit
-    private String name;
+    protected String name;
     //référence à l'instance à la classe principal
-    private PVPBox pvpBox;
+    protected PVPBox pvpBox;
     //description à affiché dans le chat au moment de la sélection du kit
-    private List<String> description;
+    protected List<String> description;
     //liste d'effet que contient le kit
-    private List<PotionEffect> effects;
+    protected List<PotionEffect> effects;
 
     public Kit(ItemStack icon, String name,  PVPBox pvpBox, List<String> description, List<PotionEffect> effects) {
         this.icon = icon;
@@ -81,4 +80,6 @@ public abstract class Kit implements Listener {
      * Méthode abstraite pour réduire d'1seconde les cooldowns de tout les pouvoirs rattaché au kit
      */
     public abstract void onTickAsync();
+
+    public abstract Kit clone();
 }

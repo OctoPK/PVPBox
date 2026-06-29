@@ -45,7 +45,7 @@ public class MenuKit extends GUI {
     @Override
     public void open(Player player) {
         inv = Bukkit.createInventory(null,9*6, "§8Kit Selector Menu");
-        Iterator<Kit> it = KitManager.kits.iterator();
+        Iterator<Kit> it = KitManager.diferentKit.iterator();
 
         for(int i = 0; i < inv.getSize(); i++) {
             if(i ==  4) {
@@ -102,7 +102,7 @@ public class MenuKit extends GUI {
                 if(slotKits.containsKey(rawSlot)) {
                     PVPBox.playerStates.put(player.getUniqueId(), PlayerState.PLAYING);
                     Kit kit = slotKits.get(rawSlot);
-                    kit.giveKit(player);
+                    KitManager.getInstance(PVPBox.getInstance()).giveKit(kit.getName(), player);
                     player.closeInventory();
                 }
                 break;

@@ -24,7 +24,7 @@ import java.util.UUID;
 
 public class KitMagicalArcher extends Kit {
 
-    private enum BowMode {
+    public enum BowMode {
         SNIPER(20){
             @Override
             public BowMode next() {
@@ -58,9 +58,9 @@ public class KitMagicalArcher extends Kit {
     }
 
 
-    private HashMap<UUID, BowMode> bowMode = new HashMap<>();
+    private BowMode bowMode = BowMode.SNIPER;
 
-    private static long LAST_SHOOT = 0;
+    public long LAST_SHOOT = 0;
 
     public KitMagicalArcher(PVPBox pvpBox) {
         super(
@@ -94,8 +94,6 @@ public class KitMagicalArcher extends Kit {
     public void giveKit(Player player) {
         super.giveKit(player);
 
-        bowMode.put(player.getUniqueId(), BowMode.SNIPER);
-
         player.getInventory().addItem(
                 new ItemBuilder(Material.DIAMOND_SWORD).setUnbreakable(true).toItem(),
                 new ItemBuilder(Material.BOW).setUnbreakable(true).setName("§6Magical Bow").setLore(Arrays.asList(
@@ -122,40 +120,8 @@ public class KitMagicalArcher extends Kit {
     public void onTickAsync() {
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onFallDamage(EntityDamageEvent event) {
-        if (event.getEntity() instanceof Player) {
-            Player player = (Player) event.getEntity();
-            if(bowMode.containsKey(player.getUniqueId())) {
-                if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
-                    event.setCancelled(true);
-                }
-            }
-        }
-    }
-
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onInteractWithBow(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        if(bowMode.containsKey(player.getUniqueId())) {
-            ItemStack item = event.getItem();
-            Action action = event.getAction();
-            if (item != null && item.getType().equals(Material.BOW) && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equalsIgnoreCase("§6Magical Bow")) {
-                if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
-                    bowMode.put(player.getUniqueId(), bowMode.get(player.getUniqueId()).next());
-                } else {
-                    event.setCancelled(true);
-                    if (System.currentTimeMillis() - LAST_SHOOT >= bowMode.get(player.getUniqueId()).getCooldown() * 1000L/20) {
-                        shoot(player);
-                        LAST_SHOOT = System.currentTimeMillis();
-                    }
-                }
-            }
-        }
-    }
-
     public void shoot(Player player) {
-        switch (bowMode.get(player.getUniqueId())) {
+        switch (bowMode) {
 
             case SNIPER:
                 shootArrow(player, player.getLocation().getDirection(), 0, 0, 0, 10, 4);
@@ -187,11 +153,16 @@ public class KitMagicalArcher extends Kit {
         arrow.spigot().setDamage(damage);
     }
 
-    public void removePlayer(UUID uuid) {
-        bowMode.remove(uuid);
+    @Override
+    public Kit clone() {
+        return new KitMagicalArcher(pvpBox);
     }
 
-    public boolean containsPlayer(UUID uuid) {
-        return bowMode.containsKey(uuid);
+    public void nextMode() {
+        bowMode = bowMode.next();
+    }
+
+    public BowMode getBowMode() {
+        return bowMode;
     }
 }

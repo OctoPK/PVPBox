@@ -52,4 +52,9 @@ public class KitTest extends Kit {
     @Override
     public void onTickAsync(){
     }
+
+    @Override
+    public Kit clone() {
+        return new KitTest(pvpBox);
+    }
 }
