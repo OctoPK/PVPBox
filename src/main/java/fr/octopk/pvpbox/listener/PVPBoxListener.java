@@ -5,6 +5,7 @@ import fr.octopk.pvpbox.PlayerState;
 import fr.octopk.pvpbox.utility.AutoBreakManager;
 import fr.octopk.pvpbox.utility.GUI.GUIManager;
 import fr.octopk.pvpbox.utility.Util;
+import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardDisplayObjective;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,10 +15,12 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -85,7 +88,7 @@ public class PVPBoxListener implements Listener {
                 }
 
 
-                System.out.println("[Listener principal] Player health : " + entity.getHealth() + " | Damager damage : " + e.getFinalDamage() + " | ma condition : " + (entity.getHealth() - e.getFinalDamage()));
+                // System.out.println("[Listener principal] Player health : " + entity.getHealth() + " | Damager damage : " + e.getFinalDamage() + " | ma condition : " + (entity.getHealth() - e.getFinalDamage()));
 
                 if (entity.getHealth() - e.getFinalDamage() <= 0) {
                     Util.reset(entity);
@@ -101,7 +104,7 @@ public class PVPBoxListener implements Listener {
                     return;
                 }
 
-                System.out.println("Player health : " + entity.getHealth() + " | Damager damage : " + e.getFinalDamage() + " | ma condition : " + (entity.getHealth() - e.getFinalDamage()));
+                // System.out.println("Player health : " + entity.getHealth() + " | Damager damage : " + e.getFinalDamage() + " | ma condition : " + (entity.getHealth() - e.getFinalDamage()));
 
                 if (entity.getHealth() - e.getFinalDamage() <= 0) {
                     Util.reset(entity);
@@ -170,5 +173,24 @@ public class PVPBoxListener implements Listener {
     @EventHandler
     public void onWeatherChange(WeatherChangeEvent event) {
         event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onLiquidFlow(BlockFromToEvent event) {
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onWaterPlace(PlayerBucketEmptyEvent event) {
+        Player player = event.getPlayer();
+        Material bucketType = event.getBucket();
+
+        if (PVPBox.playerStates.get(player.getUniqueId()) == PlayerState.PLAYING) {
+            if (bucketType == Material.WATER_BUCKET || bucketType == Material.LAVA_BUCKET) {
+                Block placed = event.getBlockClicked().getRelative(event.getBlockFace());
+
+                AutoBreakManager.addBlock(placed, placed.getLocation());
+            }
+        }
     }
 }

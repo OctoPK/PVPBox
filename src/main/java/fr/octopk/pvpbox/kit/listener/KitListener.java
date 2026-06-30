@@ -31,7 +31,7 @@ public class KitListener implements KitListenerInterface {
 
             e.setDamage(damage * (1+BASIC_FORCE_PERCENTAGE * ((double) kit.getStrenghtPercentage() /100)) * (1 - (double) kit.getResistancePercentage() / 100));
 
-            System.out.println("[Listener damage] Player basic damage : " + damage + " strenght : " +  kit.getStrenghtPercentage() + " resistance : " + kit.getResistancePercentage() + " final damage : " + e.getDamage());
+            // System.out.println("[Listener damage] Player basic damage : " + damage + " strenght : " +  kit.getStrenghtPercentage() + " resistance : " + kit.getResistancePercentage() + " final damage : " + e.getDamage());
         }
     }
 
@@ -43,11 +43,6 @@ public class KitListener implements KitListenerInterface {
         if (kit != null && PVPBox.playerStates.get(player.getUniqueId()) != PlayerState.LOBBY) {
             float speed = player.getWalkSpeed();
             player.setWalkSpeed(0.2f * (1 + kit.getSpeedPercentage() / 100f));
-
-            System.out.println("[Listener move] Player basic speed : " + speed + " speed percentage : " + kit.getSpeedPercentage() + " final speed : " + player.getWalkSpeed() + " Player : " + player.getName());
-        } else {
-            player.setWalkSpeed(0.2f);
-            System.out.println("[Listener move] Player basic speed : " + player.getWalkSpeed() + " Player : " + player.getName());
-        }
+        } else player.setWalkSpeed(0.2f);
     }
 }

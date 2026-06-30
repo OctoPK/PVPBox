@@ -42,7 +42,7 @@ public final class PVPBox extends JavaPlugin {
         getServer().getScheduler().runTaskTimer(this, new BukkitRunnable() {
             @Override
             public void run() {
-                KitManager.getInstance(instance).getPlayerKits().forEach((uuid, kit) -> {
+                kitManager.getPlayerKits().forEach((uuid, kit) -> {
                     if(kit != null) {
                         kit.onTickAsync();
                     }

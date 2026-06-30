@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AutoBreakManager {
-    private static final int BREAK_TICK = 20;
+    private static final int BREAK_SECONDS = 60;
     private static final HashMap<LocBlock, Integer> listeBlock = new HashMap<>();
 
     private static class LocBlock {
@@ -25,7 +25,7 @@ public class AutoBreakManager {
     }
 
     public static void addBlock(Block block, Location location) {
-        listeBlock.put(new LocBlock(block, location), BREAK_TICK);
+        listeBlock.put(new LocBlock(block, location), BREAK_SECONDS);
     }
 
     public static void onTyckAsync() {
@@ -52,7 +52,7 @@ public class AutoBreakManager {
         PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(
                 lb.block.getLocation().hashCode(),
                 new BlockPosition(lb.location.getBlockX(), lb.location.getBlockY(), lb.location.getBlockZ()),
-                Math.min(9, Math.max(0, 10 - tick / 2))
+                Math.min(9, Math.max(0, 10 - tick / 6))
         );
         Bukkit.getOnlinePlayers().forEach(player -> ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet));
     }
