@@ -26,8 +26,8 @@ public class KitTest extends Kit {
                         "\n",
                         "Ceci est un kit test pour faire des test.",
                         "----------------------------------------"
-                ),
-                List.of());
+                )
+        );
     }
     @Override
     public void giveKit(Player player) {

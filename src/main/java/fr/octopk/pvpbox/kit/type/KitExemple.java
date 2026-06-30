@@ -52,12 +52,8 @@ public class KitExemple extends Kit {
                         "Ceci est un kit pour but d'exemple de création de kit.",
                         "Il posséde force et speed 1.",
                         "-".repeat(10)
-                ),
-
-                Arrays.asList(
-                        new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false),
-                        new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false)
-                ));
+                )
+        );
     }
 
     /**

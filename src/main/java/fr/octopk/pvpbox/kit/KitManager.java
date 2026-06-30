@@ -3,6 +3,7 @@ package fr.octopk.pvpbox.kit;
 import fr.octopk.pvpbox.PVPBox;
 import fr.octopk.pvpbox.kit.listener.KitExempleListener;
 import fr.octopk.pvpbox.kit.listener.KitListener;
+import fr.octopk.pvpbox.kit.listener.KitListenerInterface;
 import fr.octopk.pvpbox.kit.listener.KitMagicalArcherListener;
 import fr.octopk.pvpbox.kit.type.KitExemple;
 import fr.octopk.pvpbox.kit.type.KitMagicalArcher;
@@ -28,6 +29,7 @@ public class KitManager {
      * @param pvpBox
      */
     private KitManager(PVPBox pvpBox) {
+        pvpBox.getServer().getPluginManager().registerEvents(new KitListener(), pvpBox);
         registerKit(null, new KitTest(pvpBox), pvpBox);
         registerKit(new KitMagicalArcherListener(), new KitMagicalArcher(pvpBox), pvpBox);
         registerKit(new KitExempleListener(), new KitExemple(pvpBox), pvpBox);
@@ -45,7 +47,7 @@ public class KitManager {
      * @param kit le kit à enregistré
      * @param pvpBox l'instance de la classe principale
      */
-    public void registerKit(KitListener kitListener, Kit kit, PVPBox pvpBox) {
+    public void registerKit(KitListenerInterface kitListener, Kit kit, PVPBox pvpBox) {
         if(kit == null)
             return;
         else if (diferentKit.contains(kit)) return;

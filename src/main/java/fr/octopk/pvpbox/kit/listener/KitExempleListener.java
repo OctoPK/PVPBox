@@ -10,7 +10,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class KitExempleListener extends KitListener {
+public class KitExempleListener implements KitListenerInterface {
 
     /**
      * L'event qui permet d'activé le pouvoir lorsque l'item est utilisé

@@ -3,8 +3,6 @@ package fr.octopk.pvpbox.utility;
 import fr.octopk.pvpbox.PVPBox;
 import fr.octopk.pvpbox.PlayerState;
 import fr.octopk.pvpbox.kit.KitManager;
-import fr.octopk.pvpbox.kit.type.KitExemple;
-import fr.octopk.pvpbox.kit.type.KitMagicalArcher;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,16 +13,26 @@ public class Util {
      * Méthode utilitaire pour réinitialisé le joueur à quand il spawn
      * @param p le joueur à réinitialisé
      */
-    public static void clear(Player p) {
+    public static void reset(Player p) {
+        Util.clearStuff(p);
+
+        Util.resetState(p);
+    }
+
+    public static void clearStuff(Player p) {
         p.getInventory().clear();
         p.getInventory().setArmorContents(null);
+        p.getActivePotionEffects().forEach(effect -> {
+            p.removePotionEffect(effect.getType());
+        });
+    }
+
+    public static void resetState(Player p) {
         p.getInventory().setHeldItemSlot(4);
         p.setHealth(20);
         p.setFoodLevel(20);
         p.setGameMode(GameMode.ADVENTURE);
-        p.getActivePotionEffects().forEach(effect -> {
-            p.removePotionEffect(effect.getType());
-        });
+
 
         KitManager.getInstance(PVPBox.getInstance()).removePlayer(p.getUniqueId());
 

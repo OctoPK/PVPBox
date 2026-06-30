@@ -28,7 +28,7 @@ public class CommandSpawn implements CommandExecutor {
             Location loc = new Location(Bukkit.getWorld("world"), spawn[0], spawn[1], spawn[2]);
             p.teleport(loc);
 
-            Util.clear(p);
+            Util.reset(p);
 
             p.sendMessage(PVPBox.getPrefix() + " §aTeleported to spawn !");
 

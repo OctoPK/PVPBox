@@ -12,7 +12,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class KitMagicalArcherListener extends KitListener {
+public class KitMagicalArcherListener implements KitListenerInterface {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onFallDamage(EntityDamageEvent event) {

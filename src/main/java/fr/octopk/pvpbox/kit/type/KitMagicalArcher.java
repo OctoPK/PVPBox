@@ -83,11 +83,10 @@ public class KitMagicalArcher extends Kit {
                         "deuxième mode : mitraillette, cadence de tir élevée mais faible dégat",
                         "troisième mode : fusil à pompe, cadence de tir moyenne, dégat moyen",
                         "----------------------------------------"
-                ),
-                Arrays.asList(
-                        new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 1, false, false)
                 )
         );
+
+        setSpeedPercentage(20);
     }
 
     @Override
@@ -95,7 +94,7 @@ public class KitMagicalArcher extends Kit {
         super.giveKit(player);
 
         player.getInventory().addItem(
-                new ItemBuilder(Material.DIAMOND_SWORD).setUnbreakable(true).toItem(),
+                new ItemBuilder(Material.DIAMOND_SWORD).addEnchantment(Enchantment.DAMAGE_ALL, 3).setUnbreakable(true).toItem(),
                 new ItemBuilder(Material.BOW).setUnbreakable(true).setName("§6Magical Bow").setLore(Arrays.asList(
                         "Mode : Sniper",
                         "\n",
@@ -112,7 +111,7 @@ public class KitMagicalArcher extends Kit {
                 new ItemBuilder(Material.DIAMOND_BOOTS).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).setUnbreakable(true).toItem(),
                 new ItemBuilder(Material.IRON_LEGGINGS).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).setUnbreakable(true).toItem(),
                 new ItemBuilder(Material.DIAMOND_CHESTPLATE).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).setUnbreakable(true).toItem(),
-                new ItemBuilder(Material.IRON_HELMET).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).setUnbreakable(true).toItem(),
+                new ItemBuilder(Material.IRON_HELMET).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).setUnbreakable(true).toItem(),
         });
     }
 

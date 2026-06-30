@@ -21,6 +21,7 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -41,7 +42,7 @@ public class PVPBoxListener implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
 
-        Util.clear(p);
+        Util.reset(p);
 
         p.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
         e.setJoinMessage(pvpBox.getConfig()
@@ -69,13 +70,25 @@ public class PVPBoxListener implements Listener {
             Player entity = (Player) e.getEntity();
             Player damager = null;
 
+            if (PVPBox.playerStates.get(entity.getUniqueId()) == PlayerState.LOBBY) {
+                e.setCancelled(true);
+                return;
+            }
+
+
             if (e.getDamager() instanceof Player) {
                 damager = (Player) e.getDamager();
 
-                System.out.println("Player health : " + entity.getHealth() + " | Damager damage : " + e.getFinalDamage() + " | ma condition : " + (entity.getHealth() - e.getFinalDamage()));
+                if (PVPBox.playerStates.get(damager.getUniqueId()) == PlayerState.LOBBY) {
+                    e.setCancelled(true);
+                    return;
+                }
+
+
+                System.out.println("[Listener principal] Player health : " + entity.getHealth() + " | Damager damage : " + e.getFinalDamage() + " | ma condition : " + (entity.getHealth() - e.getFinalDamage()));
 
                 if (entity.getHealth() - e.getFinalDamage() <= 0) {
-                    Util.clear(entity);
+                    Util.reset(entity);
                     entity.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
                     Bukkit.broadcastMessage(pvpBox.getConfig().getString("messages.kill").replace("%killer%", damager.getName()).replace("%dead%", entity.getName()));
                     e.setCancelled(true);
@@ -83,19 +96,19 @@ public class PVPBoxListener implements Listener {
             } else if (e.getDamager() instanceof Projectile && ((Projectile) e.getDamager()).getShooter() instanceof Player) {
                 damager =  (Player) ((Projectile) e.getDamager()).getShooter();
 
+                if (PVPBox.playerStates.get(damager.getUniqueId()) == PlayerState.LOBBY) {
+                    e.setCancelled(true);
+                    return;
+                }
+
                 System.out.println("Player health : " + entity.getHealth() + " | Damager damage : " + e.getFinalDamage() + " | ma condition : " + (entity.getHealth() - e.getFinalDamage()));
 
                 if (entity.getHealth() - e.getFinalDamage() <= 0) {
-                    Util.clear(entity);
+                    Util.reset(entity);
                     entity.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
                     Bukkit.broadcastMessage(pvpBox.getConfig().getString("messages.shoot").replace("%killer%", damager.getName()).replace("%dead%", entity.getName()));
                     e.setCancelled(true);
                 }
-            }
-
-            if (PVPBox.playerStates.get(entity.getUniqueId()) == PlayerState.LOBBY || (damager != null && PVPBox.playerStates.get(damager.getUniqueId()) == PlayerState.LOBBY)) {
-                e.setCancelled(true);
-                return;
             }
         }
     }
@@ -123,10 +136,8 @@ public class PVPBoxListener implements Listener {
                 return;
             }
 
-            System.out.println(e.toString());
-
             if(p.getHealth() - e.getFinalDamage() <= 0) {
-                Util.clear(p);
+                Util.reset(p);
                 p.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
                 Bukkit.broadcastMessage(pvpBox.getConfig().getString("messages.death").replace("%dead%", p.getName()));
                 e.setCancelled(true);
@@ -154,5 +165,10 @@ public class PVPBoxListener implements Listener {
 
             AutoBreakManager.addBlock(block, loc);
         }
+    }
+
+    @EventHandler
+    public void onWeatherChange(WeatherChangeEvent event) {
+        event.setCancelled(true);
     }
 }

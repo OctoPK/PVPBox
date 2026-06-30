@@ -24,15 +24,17 @@ public abstract class Kit {
     protected PVPBox pvpBox;
     //description à affiché dans le chat au moment de la sélection du kit
     protected List<String> description;
-    //liste d'effet que contient le kit
-    protected List<PotionEffect> effects;
 
-    public Kit(ItemStack icon, String name,  PVPBox pvpBox, List<String> description, List<PotionEffect> effects) {
+    protected int strenghtPercentage = 0;
+    protected int speedPercentage = 0;
+    protected int resistancePercentage = 0;
+
+
+    public Kit(ItemStack icon, String name,  PVPBox pvpBox, List<String> description) {
         this.icon = icon;
         this.name = name;
         this.pvpBox = pvpBox;
         this.description = description;
-        this.effects = effects;
     }
 
     public ItemStack getIcon() {
@@ -46,10 +48,6 @@ public abstract class Kit {
     public List<String> getDescription() {
         return description;
     };
-
-    public List<PotionEffect> getEffects() {
-        return effects;
-    }
 
     /**
      * Méthode qui donne le kit au joueur au moment de la sélectionn du kit.
@@ -73,7 +71,6 @@ public abstract class Kit {
         for (String line : getDescription()) {
             player.sendMessage(line);
         }
-        player.addPotionEffects(effects);
     }
 
     /**
@@ -82,4 +79,40 @@ public abstract class Kit {
     public abstract void onTickAsync();
 
     public abstract Kit clone();
+
+    public int getStrenghtPercentage() {
+        return strenghtPercentage;
+    }
+
+    public void setStrenghtPercentage(int strenghtPercentage) {
+        this.strenghtPercentage = strenghtPercentage;
+    }
+
+    public int getSpeedPercentage() {
+        return speedPercentage;
+    }
+
+    public void setSpeedPercentage(int speedPercentage) {
+        this.speedPercentage = speedPercentage;
+    }
+
+    public int getResistancePercentage() {
+        return resistancePercentage;
+    }
+
+    public void setResistancePercentage(int resistancePercentage) {
+        this.resistancePercentage = resistancePercentage;
+    }
+
+    public void addSpeedPercentage(int speedPercentage) {
+        this.speedPercentage += speedPercentage;
+    }
+
+    public void addStrenghtPercentage(int strenghtPercentage) {
+        this.strenghtPercentage += strenghtPercentage;
+    }
+
+    public void addResistancePercentage(int resistancePercentage) {
+        this.resistancePercentage += resistancePercentage;
+    }
 }
