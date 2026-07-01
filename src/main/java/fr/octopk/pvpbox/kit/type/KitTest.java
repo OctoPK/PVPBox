@@ -29,25 +29,6 @@ public class KitTest extends Kit {
                 )
         );
     }
-    @Override
-    public void giveKit(Player player) {
-        super.giveKit(player);
-
-        player.getInventory().addItem(
-                new ItemBuilder(Material.DIAMOND_SWORD).setUnbreakable(true).addEnchantment(Enchantment.DAMAGE_ALL, 2).toItem(),
-                new ItemBuilder(Material.WATER_BUCKET).toItem(),
-                new ItemBuilder(Material.GOLDEN_APPLE, 12).toItem(),
-                new ItemBuilder(Material.COOKED_BEEF, 64).toItem(),
-                new ItemBuilder(Material.COBBLESTONE, 64).toItem()
-        );
-
-        player.getInventory().setArmorContents(new ItemStack[] {
-                new ItemBuilder(Material.DIAMOND_BOOTS).toItem(),
-                new ItemBuilder(Material.LEATHER_LEGGINGS).toItem(),
-                new ItemBuilder(Material.DIAMOND_CHESTPLATE).toItem(),
-                new ItemBuilder(Material.LEATHER_HELMET).toItem(),
-        });
-    }
 
     @Override
     public void onTickAsync(){

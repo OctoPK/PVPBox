@@ -20,18 +20,19 @@ public class KitListener implements KitListenerInterface {
             Player damager = (Player) e.getDamager();
             Player entity = (Player) e.getEntity();
 
-            Kit kit = KitManager.getInstance(PVPBox.getInstance()).getKit(entity.getUniqueId());
+            Kit kitEntity = KitManager.getInstance(PVPBox.getInstance()).getKit(entity.getUniqueId());
+            Kit kitDamager = KitManager.getInstance(PVPBox.getInstance()).getKit(damager.getUniqueId());
 
-            if (PVPBox.playerStates.get(entity.getUniqueId()) == PlayerState.LOBBY || (damager != null && PVPBox.playerStates.get(damager.getUniqueId()) == PlayerState.LOBBY)) {
+            if (PVPBox.playerStates.get(entity.getUniqueId()) == PlayerState.LOBBY || PVPBox.playerStates.get(damager.getUniqueId()) == PlayerState.LOBBY) {
                 e.setCancelled(true);
                 return;
             }
 
             double damage = e.getDamage();
 
-            e.setDamage(damage * (1+BASIC_FORCE_PERCENTAGE * ((double) kit.getStrenghtPercentage() /100)) * (1 - (double) kit.getResistancePercentage() / 100));
+            e.setDamage(damage * (1+BASIC_FORCE_PERCENTAGE * ((double) kitDamager.getStrenghtPercentage() /100)) * (1 - (double) kitEntity.getResistancePercentage() / 100));
 
-            // System.out.println("[Listener damage] Player basic damage : " + damage + " strenght : " +  kit.getStrenghtPercentage() + " resistance : " + kit.getResistancePercentage() + " final damage : " + e.getDamage());
+            // System.out.println("[Listener damage] Player basic damage : " + damage + " strenght : " +  kitDamager.getStrenghtPercentage() + " resistance : " + kitEntity.getResistancePercentage() + " final damage : " + e.getDamage());
         }
     }
 

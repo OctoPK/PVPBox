@@ -1,9 +1,12 @@
 package fr.octopk.pvpbox.kit;
 
 import fr.octopk.pvpbox.PVPBox;
+import fr.octopk.pvpbox.utility.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -11,6 +14,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -73,6 +77,23 @@ public abstract class Kit {
         for (String line : getDescription()) {
             player.sendMessage(line);
         }
+
+        player.getInventory().addItem(
+                new ItemBuilder(Material.DIAMOND_SWORD).addEnchantment(Enchantment.DAMAGE_ALL, 3).setUnbreakable(true).toItem(),
+                new ItemBuilder(Material.BOW).addEnchantment(Enchantment.ARROW_DAMAGE, 3).setUnbreakable(true).toItem(),
+                new ItemBuilder(Material.WATER_BUCKET).toItem(),
+                new ItemBuilder(Material.GOLDEN_APPLE, 12).toItem(),
+                new ItemBuilder(Material.COOKED_BEEF, 64).toItem(),
+                new ItemBuilder(Material.COBBLESTONE, 64*4).toItem(),
+                new ItemBuilder(Material.ARROW, 32).toItem()
+        );
+
+        player.getInventory().setArmorContents(new ItemStack[] {
+                new ItemBuilder(Material.DIAMOND_BOOTS).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).setUnbreakable(true).toItem(),
+                new ItemBuilder(Material.IRON_LEGGINGS).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).setUnbreakable(true).toItem(),
+                new ItemBuilder(Material.DIAMOND_CHESTPLATE).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).setUnbreakable(true).toItem(),
+                new ItemBuilder(Material.IRON_HELMET).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).setUnbreakable(true).toItem(),
+        });
     }
 
     /**

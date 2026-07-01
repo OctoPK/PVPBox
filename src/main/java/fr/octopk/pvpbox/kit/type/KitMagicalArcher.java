@@ -85,34 +85,21 @@ public class KitMagicalArcher extends Kit {
                         "----------------------------------------"
                 )
         );
-
-        setSpeedPercentage(20);
     }
 
     @Override
     public void giveKit(Player player) {
         super.giveKit(player);
 
-        player.getInventory().addItem(
-                new ItemBuilder(Material.DIAMOND_SWORD).addEnchantment(Enchantment.DAMAGE_ALL, 3).setUnbreakable(true).toItem(),
+        player.getInventory().setItem(1,
                 new ItemBuilder(Material.BOW).setUnbreakable(true).setName("§6Magical Bow").setLore(Arrays.asList(
                         "Mode : Sniper",
                         "\n",
                         "Cet arc est magique, il possède des caractéristique unique !",
                         "Faites un clic droit pour changer de mode !"
-                )).toItem(),
-                new ItemBuilder(Material.WATER_BUCKET).toItem(),
-                new ItemBuilder(Material.GOLDEN_APPLE, 12).toItem(),
-                new ItemBuilder(Material.COOKED_BEEF, 64).toItem(),
-                new ItemBuilder(Material.COBBLESTONE, 64*4).toItem()
+                )).toItem()
         );
-
-        player.getInventory().setArmorContents(new ItemStack[] {
-                new ItemBuilder(Material.DIAMOND_BOOTS).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).setUnbreakable(true).toItem(),
-                new ItemBuilder(Material.IRON_LEGGINGS).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).setUnbreakable(true).toItem(),
-                new ItemBuilder(Material.DIAMOND_CHESTPLATE).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).setUnbreakable(true).toItem(),
-                new ItemBuilder(Material.IRON_HELMET).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).setUnbreakable(true).toItem(),
-        });
+        player.getInventory().clear(9);
     }
 
     @Override

@@ -17,22 +17,12 @@ public class CountDownAction {
     private int actualCooldown;
     //Le cooldown originel du pouvoir
     private int originalCooldown;
-    private boolean afficheCD;
 
     public CountDownAction(String name, Consumer<Player> action, int cooldown) {
         this.name = name;
         this.action = action;
         this.originalCooldown = cooldown;
         this.actualCooldown = 0;
-        this.afficheCD = true;
-    }
-
-    public CountDownAction(String name, Consumer<Player> action, int cooldown, boolean afficheCD) {
-        this.actualCooldown = 0;
-        this.action = action;
-        this.name = name;
-        this.originalCooldown = cooldown;
-        this.afficheCD = afficheCD;
     }
 
     /**
@@ -53,7 +43,7 @@ public class CountDownAction {
         if(actualCooldown == 0) {
             action.accept(p);
             actualCooldown = originalCooldown;
-        } else if (afficheCD){
+        } else {
             p.sendMessage(ChatColor.RED + "Votre pouvoir est en cooldown de "+ actualCooldown +"s restantes !");
         }
     }

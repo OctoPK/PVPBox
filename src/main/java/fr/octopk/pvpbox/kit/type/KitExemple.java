@@ -4,6 +4,7 @@ import fr.octopk.pvpbox.PVPBox;
 import fr.octopk.pvpbox.kit.Kit;
 import fr.octopk.pvpbox.kit.cooldown.CountDownAction;
 import fr.octopk.pvpbox.utility.ItemBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -54,6 +55,9 @@ public class KitExemple extends Kit {
                         "-".repeat(10)
                 )
         );
+
+        setStrenghtPercentage(20);
+        setSpeedPercentage(20);
     }
 
     /**
@@ -66,19 +70,9 @@ public class KitExemple extends Kit {
         super.giveKit(player);
 
         player.getInventory().addItem(
-                new ItemBuilder(Material.IRON_SWORD).toItem(),
-                new ItemBuilder(Material.COOKED_BEEF, 64).toItem(),
-                new ItemBuilder(Material.COBBLESTONE, 64).toItem(),
                 //l'item qui permet l'activation du pouvoir
                 new ItemBuilder(Material.NETHER_STAR).setName("§6Strenght").toItem()
         );
-
-        player.getInventory().setArmorContents(new ItemStack[] {
-                new ItemBuilder(Material.IRON_BOOTS).toItem(),
-                new ItemBuilder(Material.CHAINMAIL_LEGGINGS).toItem(),
-                new ItemBuilder(Material.IRON_CHESTPLATE).toItem(),
-                new ItemBuilder(Material.CHAINMAIL_HELMET).toItem(),
-        });
     }
 
     /**
@@ -87,7 +81,10 @@ public class KitExemple extends Kit {
      * @param player le joueur qui faut donné force
      */
     public void useTestStrenght(Player player) {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*10, 1, false, false), true);
+        addStrenghtPercentage(20);
+        Bukkit.getScheduler().runTaskLater(pvpBox, () -> {
+            addStrenghtPercentage(-20);
+        }, 20 * 10);
     }
 
     public CountDownAction getStrenghtAction() {

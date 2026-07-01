@@ -5,7 +5,6 @@ import fr.octopk.pvpbox.PlayerState;
 import fr.octopk.pvpbox.utility.AutoBreakManager;
 import fr.octopk.pvpbox.utility.GUI.GUIManager;
 import fr.octopk.pvpbox.utility.Util;
-import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardDisplayObjective;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -88,7 +87,7 @@ public class PVPBoxListener implements Listener {
                 }
 
 
-                // System.out.println("[Listener principal] Player health : " + entity.getHealth() + " | Damager damage : " + e.getFinalDamage() + " | ma condition : " + (entity.getHealth() - e.getFinalDamage()));
+                //System.out.println("[Listener principal] Player health : " + entity.getHealth() + " | Damager damage : " + e.getFinalDamage() + " | ma condition : " + (entity.getHealth() - e.getFinalDamage()));
 
                 if (entity.getHealth() - e.getFinalDamage() <= 0) {
                     Util.reset(entity);
