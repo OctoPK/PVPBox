@@ -10,6 +10,8 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.craftbukkit.v1_8_R3.block.CraftBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -161,7 +163,13 @@ public class PVPBoxListener implements Listener {
         if(PVPBox.playerStates.get(p.getUniqueId()) == PlayerState.PLAYING) {
             Location loc = block.getLocation();
 
-            AutoBreakManager.addBlock(block, loc);
+            BlockState oldState = event.getBlockReplacedState();
+
+            if (AutoBreakManager.contains(oldState.getBlock())) {
+                AutoBreakManager.addBlock(block, loc, Material.AIR);
+            } else {
+                AutoBreakManager.addBlock(block, loc, oldState.getType());
+            }
         }
     }
 
@@ -183,8 +191,8 @@ public class PVPBoxListener implements Listener {
         if (PVPBox.playerStates.get(player.getUniqueId()) == PlayerState.PLAYING) {
             if (bucketType == Material.WATER_BUCKET || bucketType == Material.LAVA_BUCKET) {
                 Block placed = event.getBlockClicked().getRelative(event.getBlockFace());
-
-                AutoBreakManager.addBlock(placed, placed.getLocation());
+                
+                AutoBreakManager.addBlock(placed, placed.getLocation(), placed.getType());
             }
         }
     }
