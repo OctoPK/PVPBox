@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AutoBreakManager {
-    private static final int BREAK_SECONDS = 10;
+    private static final int BREAK_SECONDS = 60;
     private static final HashMap<LocBlock, Integer> listeBlock = new HashMap<>();
 
     private static class LocBlock {
