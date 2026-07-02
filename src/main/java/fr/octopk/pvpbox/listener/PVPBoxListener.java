@@ -6,6 +6,7 @@ import fr.octopk.pvpbox.utility.AutoBreakManager;
 import fr.octopk.pvpbox.utility.GUI.GUIManager;
 import fr.octopk.pvpbox.utility.Util;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -13,16 +14,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockFromToEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -189,6 +185,26 @@ public class PVPBoxListener implements Listener {
                 Block placed = event.getBlockClicked().getRelative(event.getBlockFace());
 
                 AutoBreakManager.addBlock(placed, placed.getLocation());
+            }
+        }
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+        Player player = event.getPlayer();
+        Block block = event.getBlock();
+        if(player.getGameMode() != GameMode.CREATIVE && !AutoBreakManager.contains(block)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onFarmlandTrampling(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        if (event.getAction() == Action.PHYSICAL) {
+            Block block = event.getClickedBlock();
+            if (block != null && block.getType() == Material.SOIL) {
+                event.setCancelled(true);
             }
         }
     }

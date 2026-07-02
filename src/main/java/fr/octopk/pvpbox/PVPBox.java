@@ -1,7 +1,6 @@
 package fr.octopk.pvpbox;
 
 import fr.octopk.pvpbox.commands.CommandSpawn;
-import fr.octopk.pvpbox.kit.Kit;
 import fr.octopk.pvpbox.kit.KitManager;
 import fr.octopk.pvpbox.listener.PVPBoxListener;
 import fr.octopk.pvpbox.utility.AutoBreakManager;

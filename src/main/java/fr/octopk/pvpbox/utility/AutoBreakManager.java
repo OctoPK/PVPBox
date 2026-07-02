@@ -56,4 +56,8 @@ public class AutoBreakManager {
         );
         Bukkit.getOnlinePlayers().forEach(player -> ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet));
     }
+
+    public static boolean contains(Block block) {
+        return listeBlock.containsKey(block);
+    }
 }
