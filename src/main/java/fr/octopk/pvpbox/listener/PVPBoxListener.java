@@ -2,6 +2,7 @@ package fr.octopk.pvpbox.listener;
 
 import fr.octopk.pvpbox.PVPBox;
 import fr.octopk.pvpbox.PlayerState;
+import fr.octopk.pvpbox.kit.KitManager;
 import fr.octopk.pvpbox.utility.AutoBreakManager;
 import fr.octopk.pvpbox.utility.GUI.GUIManager;
 import fr.octopk.pvpbox.utility.Util;
@@ -91,6 +92,7 @@ public class PVPBoxListener implements Listener {
                     Util.reset(entity);
                     entity.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
                     Bukkit.broadcastMessage(pvpBox.getConfig().getString("messages.kill").replace("%killer%", damager.getName()).replace("%dead%", entity.getName()));
+                    KitManager.getInstance(pvpBox).getKit(damager.getUniqueId()).onKill(damager);
                     e.setCancelled(true);
                 }
             } else if (e.getDamager() instanceof Projectile && ((Projectile) e.getDamager()).getShooter() instanceof Player) {
@@ -107,6 +109,7 @@ public class PVPBoxListener implements Listener {
                     Util.reset(entity);
                     entity.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
                     Bukkit.broadcastMessage(pvpBox.getConfig().getString("messages.shoot").replace("%killer%", damager.getName()).replace("%dead%", entity.getName()));
+                    KitManager.getInstance(pvpBox).getKit(damager.getUniqueId()).onKill(damager);
                     e.setCancelled(true);
                 }
             }
@@ -216,4 +219,5 @@ public class PVPBoxListener implements Listener {
             }
         }
     }
+    
 }

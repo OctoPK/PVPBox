@@ -91,15 +91,21 @@ public class KitMagicalArcher extends Kit {
     public void giveKit(Player player) {
         super.giveKit(player);
 
-        player.getInventory().setItem(1,
-                new ItemBuilder(Material.BOW).setUnbreakable(true).setName("§6Magical Bow").setLore(Arrays.asList(
-                        "Mode : Sniper",
-                        "\n",
-                        "Cet arc est magique, il possède des caractéristique unique !",
-                        "Faites un clic droit pour changer de mode !"
-                )).toItem()
-        );
-        player.getInventory().clear(9);
+        for(int i = 0; i < player.getInventory().getSize(); i++) {
+            if(player.getInventory().getItem(i).getType() == Material.ARROW){
+                player.getInventory().clear(i);
+            }
+            if(player.getInventory().getItem(i).getType() == Material.BOW){
+                player.getInventory().setItem(i,
+                        new ItemBuilder(Material.BOW).setUnbreakable(true).setName("§6Magical Bow").setLore(Arrays.asList(
+                                "Mode : Sniper",
+                                "\n",
+                                "Cet arc est magique, il possède des caractéristique unique !",
+                                "Faites un clic droit pour changer de mode !"
+                        )).toItem()
+                );
+            }
+        }
     }
 
     @Override
@@ -150,5 +156,15 @@ public class KitMagicalArcher extends Kit {
 
     public BowMode getBowMode() {
         return bowMode;
+    }
+
+    @Override
+    public void onKill(Player player) {
+        super.onKill(player);
+        for(int i = 0; i < player.getInventory().getSize(); i++) {
+            if (player.getInventory().getItem(i).getType() == Material.ARROW) {
+                player.getInventory().clear(i);
+            }
+        }
     }
 }

@@ -103,4 +103,10 @@ public class KitExemple extends Kit {
     public Kit clone() {
         return new KitExemple(pvpBox);
     }
+
+    @Override
+    public void onKill(Player player) {
+        super.onKill(player);
+        strenghtAction.reduceCooldown(20);
+    }
 }

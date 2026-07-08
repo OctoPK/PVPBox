@@ -83,8 +83,7 @@ public abstract class Kit {
                 new ItemBuilder(Material.BOW).addEnchantment(Enchantment.ARROW_DAMAGE, 3).setUnbreakable(true).toItem(),
                 new ItemBuilder(Material.WATER_BUCKET).toItem(),
                 new ItemBuilder(Material.GOLDEN_APPLE, 12).toItem(),
-                new ItemBuilder(Material.COOKED_BEEF, 64).toItem(),
-                new ItemBuilder(Material.COBBLESTONE, 64*4).toItem(),
+                new ItemBuilder(Material.COBBLESTONE, 64).toItem(),
                 new ItemBuilder(Material.ARROW, 32).toItem()
         );
 
@@ -137,6 +136,21 @@ public abstract class Kit {
 
     public void addResistancePercentage(int resistancePercentage) {
         this.resistancePercentage += resistancePercentage;
+    }
+
+    public void onKill(Player player) {
+        player.getInventory().addItem(
+                new ItemBuilder(Material.GOLDEN_APPLE, 4).toItem(),
+                new ItemBuilder(Material.ARROW, 16).toItem(),
+                new ItemBuilder(Material.COBBLESTONE, 32).toItem()
+        );
+        Double health = player.getHealth();
+        Double maxHealth = player.getMaxHealth();
+        if(health + 6 >= maxHealth) {
+            player.setHealth(maxHealth);
+        } else {
+            player.setHealth(health + 6);
+        }
     }
 
 

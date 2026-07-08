@@ -40,7 +40,7 @@ public class CountDownAction {
      * @param p le joueur qui active le pouvoir
      */
     public void useAction(Player p) {
-        if(actualCooldown == 0) {
+        if(actualCooldown <= 0) {
             action.accept(p);
             actualCooldown = originalCooldown;
         } else {
@@ -54,5 +54,9 @@ public class CountDownAction {
      */
     public void changeCooldown(int newCooldown) {
         this.originalCooldown = newCooldown;
+    }
+
+    public void reduceCooldown(int newCooldown) {
+        this.actualCooldown -= newCooldown;
     }
 }
