@@ -4,23 +4,14 @@ import fr.octopk.pvpbox.PVPBox;
 import fr.octopk.pvpbox.kit.Kit;
 import fr.octopk.pvpbox.kit.cooldown.CountDownAction;
 import fr.octopk.pvpbox.utility.ItemBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+
 import org.bukkit.util.Vector;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.UUID;
 
 public class KitMagicalArcher extends Kit {
 
@@ -62,6 +53,8 @@ public class KitMagicalArcher extends Kit {
 
     public long LAST_SHOOT = 0;
 
+    private CountDownAction speedOnKill = new CountDownAction("SpeedOnKill", this::setSpeedOnKill, 0);
+
     public KitMagicalArcher(PVPBox pvpBox) {
         super(
                 new ItemBuilder(Material.BOW)
@@ -90,22 +83,18 @@ public class KitMagicalArcher extends Kit {
     @Override
     public void giveKit(Player player) {
         super.giveKit(player);
-
-        for(int i = 0; i < player.getInventory().getSize(); i++) {
-            if(player.getInventory().getItem(i).getType() == Material.ARROW){
-                player.getInventory().clear(i);
-            }
-            if(player.getInventory().getItem(i).getType() == Material.BOW){
-                player.getInventory().setItem(i,
-                        new ItemBuilder(Material.BOW).setUnbreakable(true).setName("§6Magical Bow").setLore(Arrays.asList(
-                                "Mode : Sniper",
-                                "\n",
-                                "Cet arc est magique, il possède des caractéristique unique !",
-                                "Faites un clic droit pour changer de mode !"
+        player.getInventory().remove(Material.ARROW);
+        player.getInventory().remove(Material.BOW);
+        player.getInventory().addItem(new ItemBuilder(Material.BOW)
+                        .setUnbreakable(true)
+                        .setName("§6Magical Bow")
+                        .setLore(Arrays.asList(
+                            "Mode : Sniper",
+                            "\n",
+                            "Cet arc est magique, il possède des caractéristique unique !",
+                            "Faites un clic droit pour changer de mode !"
                         )).toItem()
-                );
-            }
-        }
+            );
     }
 
     @Override
@@ -162,9 +151,18 @@ public class KitMagicalArcher extends Kit {
     public void onKill(Player player) {
         super.onKill(player);
         for(int i = 0; i < player.getInventory().getSize(); i++) {
-            if (player.getInventory().getItem(i).getType() == Material.ARROW) {
+            if (player.getInventory().getItem(i) != null && player.getInventory().getItem(i).getType() == Material.ARROW) {
                 player.getInventory().clear(i);
             }
         }
+
+        speedOnKill.useAction(player);
+    }
+
+    public void setSpeedOnKill(Player player) {
+        addSpeedPercentage(40);
+        Bukkit.getScheduler().runTaskLater(pvpBox, () -> {
+            addSpeedPercentage(-40);
+        }, 20 * 5);
     }
 }

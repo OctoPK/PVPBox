@@ -1,7 +1,7 @@
 package fr.octopk.pvpbox.kit.listener;
 
 import fr.octopk.pvpbox.PVPBox;
-import fr.octopk.pvpbox.kit.KitManager;
+import fr.octopk.pvpbox.manager.KitManager;
 import fr.octopk.pvpbox.kit.type.KitExemple;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -23,7 +23,7 @@ public class KitExempleListener implements KitListenerInterface {
             KitExemple kit = (KitExemple) KitManager.getInstance(PVPBox.getInstance()).getKit(player.getUniqueId());
             ItemStack item = event.getItem();
             Action action = event.getAction();
-            if ((action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) && item.getType().equals(Material.NETHER_STAR) && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equalsIgnoreCase("§6strenght")) {
+            if ((action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) && item != null && item.getType().equals(Material.NETHER_STAR) && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equalsIgnoreCase("§6strenght")) {
                 //Lorsque c'est le bon item, on appel la méthode useAction de notre CountDownAction
                 kit.getStrenghtAction().useAction(player);
             }

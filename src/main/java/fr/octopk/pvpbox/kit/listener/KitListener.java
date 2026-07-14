@@ -3,7 +3,7 @@ package fr.octopk.pvpbox.kit.listener;
 import fr.octopk.pvpbox.PVPBox;
 import fr.octopk.pvpbox.PlayerState;
 import fr.octopk.pvpbox.kit.Kit;
-import fr.octopk.pvpbox.kit.KitManager;
+import fr.octopk.pvpbox.manager.KitManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

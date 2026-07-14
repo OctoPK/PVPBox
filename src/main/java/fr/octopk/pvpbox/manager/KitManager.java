@@ -1,6 +1,7 @@
-package fr.octopk.pvpbox.kit;
+package fr.octopk.pvpbox.manager;
 
 import fr.octopk.pvpbox.PVPBox;
+import fr.octopk.pvpbox.kit.Kit;
 import fr.octopk.pvpbox.kit.listener.KitExempleListener;
 import fr.octopk.pvpbox.kit.listener.KitListener;
 import fr.octopk.pvpbox.kit.listener.KitListenerInterface;
@@ -13,7 +14,6 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Classe manager qui gère et instancie les kit

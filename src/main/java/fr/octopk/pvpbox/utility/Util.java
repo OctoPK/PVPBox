@@ -2,7 +2,7 @@ package fr.octopk.pvpbox.utility;
 
 import fr.octopk.pvpbox.PVPBox;
 import fr.octopk.pvpbox.PlayerState;
-import fr.octopk.pvpbox.kit.KitManager;
+import fr.octopk.pvpbox.manager.KitManager;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

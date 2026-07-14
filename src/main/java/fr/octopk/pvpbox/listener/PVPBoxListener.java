@@ -2,8 +2,8 @@ package fr.octopk.pvpbox.listener;
 
 import fr.octopk.pvpbox.PVPBox;
 import fr.octopk.pvpbox.PlayerState;
-import fr.octopk.pvpbox.kit.KitManager;
-import fr.octopk.pvpbox.utility.AutoBreakManager;
+import fr.octopk.pvpbox.manager.KitManager;
+import fr.octopk.pvpbox.manager.AutoBreakManager;
 import fr.octopk.pvpbox.utility.GUI.GUIManager;
 import fr.octopk.pvpbox.utility.Util;
 import org.bukkit.Bukkit;
@@ -12,7 +12,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
-import org.bukkit.craftbukkit.v1_8_R3.block.CraftBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -152,9 +151,7 @@ public class PVPBoxListener implements Listener {
     public void onLoseFood(FoodLevelChangeEvent event) {
         if(event.getEntity() instanceof Player) {
             Player p = (Player) event.getEntity();
-            if(PVPBox.playerStates.get(p.getUniqueId()) == PlayerState.LOBBY) {
-                event.setCancelled(true);
-            }
+            event.setCancelled(true);
         }
     }
 

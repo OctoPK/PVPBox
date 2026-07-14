@@ -3,7 +3,7 @@ package fr.octopk.pvpbox.menu;
 import fr.octopk.pvpbox.PVPBox;
 import fr.octopk.pvpbox.PlayerState;
 import fr.octopk.pvpbox.kit.Kit;
-import fr.octopk.pvpbox.kit.KitManager;
+import fr.octopk.pvpbox.manager.KitManager;
 import fr.octopk.pvpbox.utility.GUI.GUI;
 import fr.octopk.pvpbox.utility.GUI.GUIClick;
 import fr.octopk.pvpbox.utility.ItemBuilder;

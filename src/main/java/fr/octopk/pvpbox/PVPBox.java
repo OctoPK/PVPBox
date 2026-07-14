@@ -1,9 +1,9 @@
 package fr.octopk.pvpbox;
 
 import fr.octopk.pvpbox.commands.CommandSpawn;
-import fr.octopk.pvpbox.kit.KitManager;
+import fr.octopk.pvpbox.manager.KitManager;
 import fr.octopk.pvpbox.listener.PVPBoxListener;
-import fr.octopk.pvpbox.utility.AutoBreakManager;
+import fr.octopk.pvpbox.manager.AutoBreakManager;
 import fr.octopk.pvpbox.utility.GUI.GUIManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -46,7 +46,7 @@ public final class PVPBox extends JavaPlugin {
                         kit.onTickAsync();
                     }
                 });
-                AutoBreakManager.onTyckAsync();
+                AutoBreakManager.onTickAsync();
             }
         }, 0L, 20L);
     }

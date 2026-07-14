@@ -1,7 +1,7 @@
 package fr.octopk.pvpbox.kit.listener;
 
 import fr.octopk.pvpbox.PVPBox;
-import fr.octopk.pvpbox.kit.KitManager;
+import fr.octopk.pvpbox.manager.KitManager;
 import fr.octopk.pvpbox.kit.type.KitMagicalArcher;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -10,7 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;

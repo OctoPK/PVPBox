@@ -1,4 +1,4 @@
-package fr.octopk.pvpbox.utility;
+package fr.octopk.pvpbox.manager;
 
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
@@ -31,7 +31,7 @@ public class AutoBreakManager {
         listeBlock.put(new LocBlock(block, location, replace), BREAK_SECONDS);
     }
 
-    public static void onTyckAsync() {
+    public static void onTickAsync() {
         for (Map.Entry<LocBlock, Integer> entry : new HashMap<>(listeBlock).entrySet()) {
             LocBlock lb = entry.getKey();
             Block block = lb.block;
