@@ -61,7 +61,7 @@ public class AutoBreakManager {
     }
 
     public static boolean contains(Block block) {
-        for(LocBlock lb : listeBlock.keySet()) {
+        for (LocBlock lb : listeBlock.keySet()) {
             if (lb.block.equals(block)) return true;
         }
         return false;
