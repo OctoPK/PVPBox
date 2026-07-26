@@ -58,8 +58,9 @@ public class KitManager {
     public void giveKit(String name, Player player) {
         for(Kit kit : diferentKit) {
             if(kit.getName().equalsIgnoreCase(name)) {
-                playerKits.put(player.getUniqueId(), kit.clone());
-                kit.giveKit(player);
+                Kit k = kit.clone();
+                playerKits.put(player.getUniqueId(), k);
+                k.giveKit(player);
             }
         }
     }

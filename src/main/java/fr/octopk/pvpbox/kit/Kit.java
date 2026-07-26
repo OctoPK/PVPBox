@@ -1,6 +1,7 @@
 package fr.octopk.pvpbox.kit;
 
 import fr.octopk.pvpbox.PVPBox;
+import fr.octopk.pvpbox.manager.TabManager;
 import fr.octopk.pvpbox.utility.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -31,12 +32,16 @@ public abstract class Kit {
     protected int speedPercentage = 0;
     protected int resistancePercentage = 0;
 
+    private TabManager tabManager;
+    private Player player;
+
 
     public Kit(ItemStack icon, String name,  PVPBox pvpBox, List<String> description) {
         this.icon = icon;
         this.name = name;
         this.pvpBox = pvpBox;
         this.description = description;
+        tabManager = TabManager.getInstance(pvpBox);
     }
 
     public ItemStack getIcon() {
@@ -89,6 +94,11 @@ public abstract class Kit {
                 new ItemBuilder(Material.DIAMOND_CHESTPLATE).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).setUnbreakable(true).toItem(),
                 new ItemBuilder(Material.IRON_HELMET).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).setUnbreakable(true).toItem(),
         });
+
+        this.player = player;
+        tabManager.setResistance(player, resistancePercentage);
+        tabManager.setStrenght(player, strenghtPercentage);
+        tabManager.setSpeed(player, speedPercentage);
     }
 
     /**
@@ -104,6 +114,7 @@ public abstract class Kit {
 
     public void setStrenghtPercentage(int strenghtPercentage) {
         this.strenghtPercentage = strenghtPercentage;
+        tabManager.setStrenght(player, strenghtPercentage);
     }
 
     public int getSpeedPercentage() {
@@ -112,6 +123,7 @@ public abstract class Kit {
 
     public void setSpeedPercentage(int speedPercentage) {
         this.speedPercentage = speedPercentage;
+        tabManager.setSpeed(player, speedPercentage);
     }
 
     public int getResistancePercentage() {
@@ -120,18 +132,19 @@ public abstract class Kit {
 
     public void setResistancePercentage(int resistancePercentage) {
         this.resistancePercentage = resistancePercentage;
+        tabManager.setResistance(player, resistancePercentage);
     }
 
     public void addSpeedPercentage(int speedPercentage) {
-        this.speedPercentage += speedPercentage;
+        setSpeedPercentage(getSpeedPercentage() + speedPercentage);
     }
 
     public void addStrenghtPercentage(int strenghtPercentage) {
-        this.strenghtPercentage += strenghtPercentage;
+        setStrenghtPercentage(getStrenghtPercentage() + strenghtPercentage);
     }
 
     public void addResistancePercentage(int resistancePercentage) {
-        this.resistancePercentage += resistancePercentage;
+        setResistancePercentage(getResistancePercentage() + resistancePercentage);
     }
 
     public void onKill(Player player) {
@@ -149,5 +162,7 @@ public abstract class Kit {
         }
     }
 
-
+    public Player getPlayer() {
+        return player;
+    }
 }

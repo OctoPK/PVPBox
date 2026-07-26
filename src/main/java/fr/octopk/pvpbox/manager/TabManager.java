@@ -34,8 +34,7 @@ public class TabManager implements Listener {
     }
 
     private void updateFooter() {
-        DEFAULT_FOOTER = "§7§lVersion: §e" + pvpBox.getDescription().getVersion() + " §7| §7§lJoueurs connectés: §e" + pvpBox.getServer().getOnlinePlayers().size() + "§7/§e" + pvpBox.getServer().getMaxPlayers();
-        updatePlayerFooter();
+        updateFooter(pvpBox.getServer().getOnlinePlayers().size());
     }
 
     private void updateFooter(int nbOnlinePlayers) {
@@ -55,18 +54,36 @@ public class TabManager implements Listener {
         pushTabList(player);
     }
 
-    public void setEffect(Player player, String effect) {
-        List<String> list = footers.getOrDefault(player.getUniqueId(), Arrays.asList("", ""));
-        list.set(0, effect);
+    public void setSpeed(Player player, int speed) {
+        List<String> list = footers.getOrDefault(player.getUniqueId(), Arrays.asList("", "", "", ""));
+        list.set(0, "§e§l" + speed + " ⚡⚡§r");
+        footers.put(player.getUniqueId(), list);
+        pushTabList(player);
+    }
+
+    public void setStrenght(Player player, int strenght) {
+        List<String> list = footers.getOrDefault(player.getUniqueId(), Arrays.asList("", "", "", ""));
+        list.set(1, "§c§l" + strenght + " ⚔§r");
+        footers.put(player.getUniqueId(), list);
+        pushTabList(player);
+    }
+
+    public void setResistance(Player player, int resistance) {
+        List<String> list = footers.getOrDefault(player.getUniqueId(), Arrays.asList("", "", "", ""));
+        list.set(2, "§9§l" + resistance + " ♦§r");
         footers.put(player.getUniqueId(), list);
         pushTabList(player);
     }
 
     public void setFooter(Player player, String footer) {
-        List<String> list = footers.getOrDefault(player.getUniqueId(), Arrays.asList("", ""));
-        list.set(1, footer);
+        List<String> list = footers.getOrDefault(player.getUniqueId(), Arrays.asList("", "", "", ""));
+        list.set(3, footer);
         footers.put(player.getUniqueId(), list);
         pushTabList(player);
+    }
+
+    public void clearEffect(Player player) {
+        setFooter(player, Arrays.asList("", "", "", DEFAULT_FOOTER));
     }
 
     public void setHeaderFooter(Player player, String header, List<String> footer) {
@@ -89,14 +106,11 @@ public class TabManager implements Listener {
 
     private void pushTabList(Player player) {
         UUID id = player.getUniqueId();
-        List<String> list = footers.getOrDefault(id, new ArrayList<>());
+        List<String> list = footers.getOrDefault(id, Arrays.asList("", "", "", ""));
         StringBuilder footer = new StringBuilder();
-        if (!list.isEmpty()) {
-            for (String line : list) {
-                footer.append(line).append("\n");
-            }
-            footer.delete(footer.length() - 1, footer.length());
-        }
+        if (list.get(0).isEmpty()) {
+            footer.append("\n").append(list.get(3));
+        } else footer.append("\n").append(list.get(0)).append("    ").append(list.get(1)).append("    ").append(list.get(2)).append("\n\n").append(list.get(3));
         sendHeaderFooterPacket(player, headers.getOrDefault(id, ""), footer.toString());
     }
 
@@ -125,7 +139,7 @@ public class TabManager implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         updateFooter();
         UUID id = event.getPlayer().getUniqueId();
-        setHeader(event.getPlayer(), "§6§lPVPBOX §7- §e§lWIP");
+        setHeader(event.getPlayer(), "\n§6§lPVPBOX §7- §e§lWIP\n");
         setFooter(event.getPlayer(), DEFAULT_FOOTER);
     }
 

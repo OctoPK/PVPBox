@@ -7,17 +7,8 @@ import fr.octopk.pvpbox.utility.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 
 /**
  * Kit d'exemple, pour montré comment créé un kit
@@ -55,9 +46,6 @@ public class KitExemple extends Kit {
                         "-".repeat(10)
                 )
         );
-
-        setStrenghtPercentage(20);
-        setSpeedPercentage(20);
     }
 
     /**
@@ -68,6 +56,9 @@ public class KitExemple extends Kit {
     @Override
     public void giveKit(Player player) {
         super.giveKit(player);
+
+        setStrenghtPercentage(20);
+        setSpeedPercentage(20);
 
         player.getInventory().addItem(
                 //l'item qui permet l'activation du pouvoir

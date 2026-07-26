@@ -3,6 +3,7 @@ package fr.octopk.pvpbox.utility;
 import fr.octopk.pvpbox.PVPBox;
 import fr.octopk.pvpbox.PlayerState;
 import fr.octopk.pvpbox.manager.KitManager;
+import fr.octopk.pvpbox.manager.TabManager;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -33,8 +34,9 @@ public class Util {
         p.setFoodLevel(20);
         p.setGameMode(GameMode.ADVENTURE);
 
-
         KitManager.getInstance(PVPBox.getInstance()).removePlayer(p.getUniqueId());
+
+        TabManager.getInstance(PVPBox.getInstance()).clearEffect(p);
 
         ItemBuilder builder = new ItemBuilder(Material.COMPASS);
         builder.setName("§6Kit Selector §7- Clic Droit");
