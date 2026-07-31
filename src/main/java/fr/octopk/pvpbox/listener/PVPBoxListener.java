@@ -20,6 +20,8 @@ import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
@@ -125,6 +127,24 @@ public class PVPBoxListener implements Listener {
 
         if(item.getType().equals(Material.COMPASS) && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equalsIgnoreCase("§6Kit Selector §7- Clic Droit")) {
             GUIManager.openMenu(p, "§8Kit Selector Menu");
+        }
+    }
+
+    @EventHandler
+    public void onOpenChest(InventoryOpenEvent e) {
+        if(PVPBox.playerStates.get(e.getPlayer().getUniqueId()) == PlayerState.PLAYING) {
+            switch (e.getInventory().getType()) {
+                case CHEST:
+                case ENDER_CHEST:
+                case DISPENSER:
+                case DROPPER:
+                case FURNACE:
+                case ANVIL:
+                case WORKBENCH:
+                case HOPPER:
+                    e.setCancelled(true);
+                    break;
+            }
         }
     }
 

@@ -65,7 +65,7 @@ public class KitMagicalArcherListener implements KitListenerInterface {
 
     @EventHandler
     public void onPickupArrow(PlayerPickupItemEvent event) {
-        if (KitManager.getInstance(PVPBox.getInstance()).getKit(event.getPlayer().getUniqueId()) instanceof KitMagicalArcher) {
+        if (KitManager.getInstance(PVPBox.getInstance()).getKit(event.getPlayer().getUniqueId()) instanceof KitMagicalArcher && event.getItem().getItemStack().getType() == Material.ARROW) {
             event.setCancelled(true);
         }
     }
