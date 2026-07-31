@@ -15,6 +15,24 @@ location:
     - [ 137.5, 8.0, -1941.5 ]
     - [ 82.5, 17.0, -1912.5 ]
     - [ 82.5, 14.0, -1941.5 ]
+
+meteor-shower:
+  enabled: true
+  world: world
+  meteor-block: NETHERRACK
+  random-position-radius: 60
+  spawn-attempt-per-interval: 2
+  spawn-distance: 96
+  spawning-chance: 10
+  meteor-speed: 1.0
+  max-meteors: 40
+  explosion: true
+  explosion-power: 4
+  explosion-produce-fire: false
+  explosion-destruction-chance: 40
+  block-restore-delay: 60
+  debris-place-blocks: false
+
 messages:
   join: "§2[§aPVPBox§2]§a §2%player% §ajoin the game §2[%connected%/%maxslot%]"
   quit: "§2[§aPVPBox§2]§a §2%player% §aleft the game §2[%connected%/%maxslot%]"

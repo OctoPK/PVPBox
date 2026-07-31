@@ -1,10 +1,12 @@
 package fr.octopk.pvpbox;
 
+import fr.octopk.pvpbox.commands.CommandMeteor;
 import fr.octopk.pvpbox.commands.CommandSpawn;
 import fr.octopk.pvpbox.manager.KitManager;
 import fr.octopk.pvpbox.listener.PVPBoxListener;
 import fr.octopk.pvpbox.manager.AutoBreakManager;
 import fr.octopk.pvpbox.manager.TabManager;
+import fr.octopk.pvpbox.meteoroid.MeteorShowerManager;
 import fr.octopk.pvpbox.utility.GUI.GUIManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -23,6 +25,8 @@ public final class PVPBox extends JavaPlugin {
     //liste des états des joueurs
     public static Map<UUID, PlayerState> playerStates = new HashMap<>();
 
+    private MeteorShowerManager meteorShowerManager;
+
     @Override
     public void onEnable() {
         saveDefaultConfig();
@@ -32,9 +36,11 @@ public final class PVPBox extends JavaPlugin {
         new GUIManager();
         KitManager kitManager = KitManager.getInstance(instance);
         TabManager tabManager = TabManager.getInstance(instance);
+        meteorShowerManager = new MeteorShowerManager(this);
 
         //j'enregistre une nouvelle commande
         getCommand("spawn").setExecutor(new CommandSpawn(this));
+        getCommand("meteor").setExecutor(new CommandMeteor(this));
 
         //j'enregistre un nouveau listener
         getServer().getPluginManager().registerEvents(new PVPBoxListener(this), this);
@@ -55,7 +61,9 @@ public final class PVPBox extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        if (meteorShowerManager != null) {
+            meteorShowerManager.stop();
+        }
     }
 
     //pour récupéré une instance de la classe
