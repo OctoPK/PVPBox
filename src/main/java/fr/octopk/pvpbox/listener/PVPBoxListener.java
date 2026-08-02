@@ -185,10 +185,10 @@ public class PVPBoxListener implements Listener {
 
             BlockState oldState = event.getBlockReplacedState();
 
-            if (AutoBreakManager.contains(oldState.getBlock())) {
-                AutoBreakManager.addBlock(block, loc, Material.AIR);
+            if (AutoBreakManager.contains(oldState.getLocation(), (short) oldState.getBlock().getTypeId(), oldState.getBlock().getData())) {
+                AutoBreakManager.addBlock(block, loc, (short) Material.AIR.getId(), (byte) 0);
             } else {
-                AutoBreakManager.addBlock(block, loc, oldState.getType());
+                AutoBreakManager.addBlock(block, loc, (short) oldState.getTypeId(), oldState.getData().getData());
             }
         }
     }
@@ -212,7 +212,7 @@ public class PVPBoxListener implements Listener {
             if (bucketType == Material.WATER_BUCKET || bucketType == Material.LAVA_BUCKET) {
                 Block placed = event.getBlockClicked().getRelative(event.getBlockFace());
                 
-                AutoBreakManager.addBlock(placed, placed.getLocation(), placed.getType());
+                AutoBreakManager.addBlock(placed, placed.getLocation(), (short) placed.getTypeId(), placed.getData());
             }
         }
     }
@@ -221,7 +221,7 @@ public class PVPBoxListener implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
         Block block = event.getBlock();
-        if(player.getGameMode() != GameMode.CREATIVE && !AutoBreakManager.contains(block)) {
+        if(player.getGameMode() != GameMode.CREATIVE && !AutoBreakManager.contains(block.getLocation(), (short) block.getTypeId(), block.getData())) {
             event.setCancelled(true);
         }
     }

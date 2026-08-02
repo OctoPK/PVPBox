@@ -16,32 +16,37 @@ public class AutoBreakManager {
     private static final HashMap<LocBlock, Integer> listeBlock = new HashMap<>();
 
     private static class LocBlock {
-        public Block block;
         public Location location;
-        public Material replace;
+        public short placedTypeId;
+        public byte placedData;
+        public short replaceType;
+        public byte replaceData;
 
-        public LocBlock(Block block, Location location, Material replace) {
-            this.block = block;
+        public LocBlock(Location location, short placedTypeId, byte placedData, short replaceType, byte replaceData) {
             this.location = location;
-            this.replace = replace;
+            this.placedTypeId = placedTypeId;
+            this.placedData = placedData;
+            this.replaceType = replaceType;
+            this.replaceData = replaceData;
         }
     }
 
-    public static void addBlock(Block block, Location location, Material replace) {
-        listeBlock.put(new LocBlock(block, location, replace), BREAK_SECONDS);
+    public static void addBlock(Block block, Location location, short replaceType, byte replaceData) {
+        listeBlock.put(new LocBlock(location, (short) block.getTypeId(), block.getData(), replaceType, replaceData), BREAK_SECONDS);
     }
 
     public static void onTickAsync() {
         for (Map.Entry<LocBlock, Integer> entry : new HashMap<>(listeBlock).entrySet()) {
             LocBlock lb = entry.getKey();
-            Block block = lb.block;
-            Material type = lb.location.getBlock().getType();
+
+            short typeId = (short) lb.location.getBlock().getTypeId();
+            byte data = lb.location.getBlock().getData();
             int tick = entry.getValue() - 1;
 
             if (tick <= 0) {
                 listeBlock.remove(lb);
-                if (block.getType() == type) {
-                    lb.location.getBlock().setType(lb.replace);
+                if (lb.placedTypeId == typeId && lb.placedData == data) {
+                    lb.location.getBlock().setTypeIdAndData(lb.replaceType, lb.replaceData, false);
                 }
                 updateAnim(lb, 0);
             } else {
@@ -53,16 +58,19 @@ public class AutoBreakManager {
 
     private static void updateAnim(LocBlock lb, int tick) {
         PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(
-                lb.block.getLocation().hashCode(),
+                lb.location.hashCode(),
                 new BlockPosition(lb.location.getBlockX(), lb.location.getBlockY(), lb.location.getBlockZ()),
                 Math.min(9, Math.max(0, 10 - tick / (BREAK_SECONDS/10)))
         );
         Bukkit.getOnlinePlayers().forEach(player -> ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet));
     }
 
-    public static boolean contains(Block block) {
+    public static boolean contains(Location location, short type, byte data) {
         for (LocBlock lb : listeBlock.keySet()) {
-            if (lb.block.equals(block)) return true;
+            short currentType = lb.placedTypeId;
+            byte replaceData = lb.placedData;
+            Location loc = lb.location;
+            if (loc.equals(location) && currentType == type && replaceData == data) return true;
         }
         return false;
     }

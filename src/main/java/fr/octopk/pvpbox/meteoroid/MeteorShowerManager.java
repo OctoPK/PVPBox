@@ -10,9 +10,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
+
+import fr.octopk.pvpbox.manager.AutoBreakManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -324,7 +327,9 @@ public class MeteorShowerManager implements Listener {
         if (this.blockRestoreDelay <= 0) {
             return;
         }
-        this.pendingRestores.add(new PendingRestore(block, this.tickCounter));
+        if(!AutoBreakManager.contains(block.getLocation(), block.getType(), block.getData())) {
+            this.pendingRestores.add(new PendingRestore(block, this.tickCounter));
+        }
     }
 
     private void restorePendingBlocks() {
