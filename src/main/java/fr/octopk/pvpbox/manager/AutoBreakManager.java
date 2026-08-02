@@ -39,15 +39,11 @@ public class AutoBreakManager {
         for (Map.Entry<LocBlock, Integer> entry : new HashMap<>(listeBlock).entrySet()) {
             LocBlock lb = entry.getKey();
 
-            short typeId = (short) lb.location.getBlock().getTypeId();
-            byte data = lb.location.getBlock().getData();
             int tick = entry.getValue() - 1;
 
             if (tick <= 0) {
                 listeBlock.remove(lb);
-                if (lb.placedTypeId == typeId && lb.placedData == data) {
-                    lb.location.getBlock().setTypeIdAndData(lb.replaceType, lb.replaceData, false);
-                }
+                replaceBlock(lb);
                 updateAnim(lb, 0);
             } else {
                 listeBlock.put(lb, tick);
@@ -73,5 +69,17 @@ public class AutoBreakManager {
             if (loc.equals(location) && currentType == type && replaceData == data) return true;
         }
         return false;
+    }
+
+    private static void replaceBlock(LocBlock lb) {
+        if (lb.placedTypeId == lb.location.getBlock().getTypeId() && lb.placedData == lb.location.getBlock().getData()) {
+            lb.location.getBlock().setTypeIdAndData(lb.replaceType, lb.replaceData, false);
+        }
+    }
+
+    public static void stop() {
+        for(LocBlock lb : listeBlock.keySet()) {
+            replaceBlock(lb);
+        }
     }
 }

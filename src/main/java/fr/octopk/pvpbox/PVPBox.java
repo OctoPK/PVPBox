@@ -64,6 +64,7 @@ public final class PVPBox extends JavaPlugin {
         if (meteorShowerManager != null) {
             meteorShowerManager.stop();
         }
+        AutoBreakManager.stop();
     }
 
     //pour récupéré une instance de la classe
