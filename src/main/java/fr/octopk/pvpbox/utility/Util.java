@@ -47,6 +47,8 @@ public class Util {
         p.getInventory().setItem(4, builder.toItem());
 
         PVPBox.playerStates.put(p.getUniqueId(), PlayerState.LOBBY);
+
+        if (p.hasPermission("player.vip")) p.setAllowFlight(true);
     }
 
     public static Location getSpawn() {
