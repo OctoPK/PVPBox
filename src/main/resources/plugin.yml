@@ -7,5 +7,3 @@ commands:
     description: commande pour retourné au spawn et qui clear l'inv
   meteor:
     permission: pvpbox.meteor
-permissions:
-  pvpbox.meteor:
