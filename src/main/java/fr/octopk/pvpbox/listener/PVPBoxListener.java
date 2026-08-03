@@ -19,6 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -236,5 +237,17 @@ public class PVPBoxListener implements Listener {
             }
         }
     }
-    
+
+    @EventHandler
+    public void onNaturalRegen(EntityRegainHealthEvent event) {
+        if (event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
+            if(PVPBox.playerStates.get(player.getUniqueId()) == PlayerState.PLAYING) {
+                EntityRegainHealthEvent.RegainReason reason =  event.getRegainReason();
+                if(reason == EntityRegainHealthEvent.RegainReason.SATIATED || reason == EntityRegainHealthEvent.RegainReason.REGEN) {
+                    event.setCancelled(true);
+                }
+            }
+        }
+    }
 }
