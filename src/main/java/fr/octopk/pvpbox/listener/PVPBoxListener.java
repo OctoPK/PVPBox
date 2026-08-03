@@ -22,7 +22,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
@@ -245,5 +244,10 @@ public class PVPBoxListener implements Listener {
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void onDropItem(PlayerDropItemEvent event) {
+        event.setCancelled(true);
     }
 }

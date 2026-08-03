@@ -1,5 +1,8 @@
 package fr.octopk.pvpbox.utility.GUI;
 
+import fr.octopk.pvpbox.PVPBox;
+import fr.octopk.pvpbox.PlayerState;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,6 +19,9 @@ public class GUIClickEvent implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
+
+        if (PVPBox.playerStates.get(player.getUniqueId()) == PlayerState.LOBBY && player.getGameMode() != GameMode.CREATIVE) e.setCancelled(true);
+
         GUIClick typeClick = null;
 
         if(e.getAction().equals(InventoryAction.PICKUP_ALL)) typeClick = GUIClick.LEFT_CLICK;
@@ -29,7 +35,7 @@ public class GUIClickEvent implements Listener {
         GUI gui = GUIManager.getMenus(e.getInventory().getName());
 
         if(gui == null) return;
-        e.setCancelled(true);
+
         gui.handleClick(player, typeClick, item, e.getRawSlot());
 
     }
