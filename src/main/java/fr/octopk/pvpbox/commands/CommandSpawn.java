@@ -24,9 +24,6 @@ public class CommandSpawn implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(sender instanceof Player) {
             Player p = (Player) sender;
-            Double[] spawn = instance.getConfig().getDoubleList("location.lobby-spawn").toArray(new Double[0]);
-            Location loc = new Location(Bukkit.getWorld("world"), spawn[0], spawn[1], spawn[2]);
-            p.teleport(loc);
 
             Util.reset(p);
 

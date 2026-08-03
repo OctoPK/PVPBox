@@ -47,7 +47,6 @@ public class PVPBoxListener implements Listener {
 
         Util.reset(p);
 
-        p.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
         e.setJoinMessage(pvpBox.getConfig()
                 .getString("messages.join")
                 .replace("%player%", p.getName())
@@ -92,7 +91,6 @@ public class PVPBoxListener implements Listener {
 
                 if (entity.getHealth() - e.getFinalDamage() <= 0) {
                     Util.reset(entity);
-                    entity.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
                     Bukkit.broadcastMessage(pvpBox.getConfig().getString("messages.kill").replace("%killer%", damager.getName()).replace("%dead%", entity.getName()));
                     KitManager.getInstance(pvpBox).getKit(damager.getUniqueId()).onKill(damager);
                     e.setCancelled(true);
@@ -109,7 +107,6 @@ public class PVPBoxListener implements Listener {
 
                 if (entity.getHealth() - e.getFinalDamage() <= 0) {
                     Util.reset(entity);
-                    entity.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
                     Bukkit.broadcastMessage(pvpBox.getConfig().getString("messages.shoot").replace("%killer%", damager.getName()).replace("%dead%", entity.getName()));
                     KitManager.getInstance(pvpBox).getKit(damager.getUniqueId()).onKill(damager);
                     e.setCancelled(true);
@@ -161,7 +158,6 @@ public class PVPBoxListener implements Listener {
 
             if(p.getHealth() - e.getFinalDamage() <= 0) {
                 Util.reset(p);
-                p.teleport(new Location(pvpBox.getServer().getWorld("world"), spawn[0], spawn[1], spawn[2], 0, 0));
                 Bukkit.broadcastMessage(pvpBox.getConfig().getString("messages.death").replace("%dead%", p.getName()));
                 e.setCancelled(true);
             }

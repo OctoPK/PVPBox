@@ -8,6 +8,9 @@ import fr.octopk.pvpbox.manager.AutoBreakManager;
 import fr.octopk.pvpbox.manager.TabManager;
 import fr.octopk.pvpbox.meteoroid.MeteorShowerManager;
 import fr.octopk.pvpbox.utility.GUI.GUIManager;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -57,6 +60,17 @@ public final class PVPBox extends JavaPlugin {
                 AutoBreakManager.onTickAsync();
             }
         }, 0L, 20L);
+
+        if (Bukkit.getWorld("lobby") == null) {
+            WorldCreator creator = new WorldCreator("lobby");
+            Bukkit.createWorld(creator);
+            World lobby = Bukkit.createWorld(new WorldCreator("lobby"));
+            if (lobby == null) {
+                getLogger().severe("Failed to load lobby world! createWorld returned null.");
+            } else {
+                getLogger().info("Lobby loaded: " + lobby.getName());
+            }
+        }
     }
 
     @Override

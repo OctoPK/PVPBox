@@ -1,8 +1,13 @@
 location:
-  lobby-spawn:
+  map-spawn:
     - 82.5
     - 97
     - -1928.5
+
+  lobby-spawn:
+    - 100000.5
+    - 105.0
+    - 100000.5
 
   arena-spawns:
     - [ 117.5, 8.0, -1986.5 ]
