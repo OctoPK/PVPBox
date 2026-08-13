@@ -1,5 +1,6 @@
 package fr.octopk.pvpbox;
 
+import fr.octopk.pvpbox.commands.CommandDebug;
 import fr.octopk.pvpbox.commands.CommandMeteor;
 import fr.octopk.pvpbox.commands.CommandSpawn;
 import fr.octopk.pvpbox.manager.KitManager;
@@ -44,6 +45,7 @@ public final class PVPBox extends JavaPlugin {
         //j'enregistre une nouvelle commande
         getCommand("spawn").setExecutor(new CommandSpawn(this));
         getCommand("meteor").setExecutor(new CommandMeteor(this));
+        getCommand("debug").setExecutor(new CommandDebug(this));
 
         //j'enregistre un nouveau listener
         getServer().getPluginManager().registerEvents(new PVPBoxListener(this), this);
