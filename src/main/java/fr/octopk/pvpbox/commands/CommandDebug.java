@@ -32,8 +32,8 @@ public class CommandDebug implements CommandExecutor {
                 return getState(sender, args);
             case "seteffect":
                 return setEffect(sender, args);
-            /*case "setstate":
-                return setState(sender, args);*/
+            case "setstate":
+                return setState(sender, args);
             default:
                 sendUsage(sender, label);
                 return true;
@@ -114,6 +114,44 @@ public class CommandDebug implements CommandExecutor {
         }
 
         sender.sendMessage(PVPBox.getPrefix() + " §aEffet " + effect + " appliqué à " + target.getName() + " de " + percentage + "%");
+        return true;
+    }
+
+    private boolean setState(CommandSender sender, String[] args) {
+        Player target;
+        if (args.length >= 2) {
+            target = this.pvpBox.getServer().getPlayer(args[1]);
+        } else {
+            sender.sendMessage(PVPBox.getPrefix() + " §cIndique un joueur: /debug setstate <joueur> <playing|lobby>");
+            return true;
+        }
+
+        if (target == null) {
+            sender.sendMessage(PVPBox.getPrefix() + " §cJoueur introuvable");
+            return true;
+        }
+
+        String state;
+        if (args.length >= 3) {
+            state = args[2];
+        } else {
+            sender.sendMessage(PVPBox.getPrefix() + " §cIndique un état: /debug setstate <joueur> <playing|lobby>");
+            return true;
+        }
+
+        switch (state.toLowerCase(Locale.ROOT)) {
+            case "playing":
+                PVPBox.playerStates.put(target.getUniqueId(), PlayerState.PLAYING);
+                break;
+            case "lobby":
+                PVPBox.playerStates.put(target.getUniqueId(), PlayerState.LOBBY);
+                break;
+            default:
+                sender.sendMessage(PVPBox.getPrefix() + " §cÉtat invalide: /debug setstate <joueur> <playing|lobby>");
+                return true;
+        }
+
+        sender.sendMessage(PVPBox.getPrefix() + " §aÉtat " + state + " appliqué à " + target.getName());
         return true;
     }
 
