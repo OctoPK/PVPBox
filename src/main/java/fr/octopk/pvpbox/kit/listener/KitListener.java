@@ -43,7 +43,9 @@ public class KitListener implements KitListenerInterface {
 
         if (kit != null && PVPBox.playerStates.get(player.getUniqueId()) != PlayerState.LOBBY) {
             float speed = player.getWalkSpeed();
-            player.setWalkSpeed(0.2f * (1 + kit.getSpeedPercentage() / 100f));
+            float newSpeed = 0.2f * (1 + kit.getSpeedPercentage() / 100f);
+            if (newSpeed > 1) newSpeed = 1;
+            player.setWalkSpeed(newSpeed);
         } else player.setWalkSpeed(0.2f);
     }
 }
